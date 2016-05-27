@@ -1560,6 +1560,9 @@ namespace CCFlow.WF.UC
                 }
                 #endregion 在处理其它。
 
+            
+
+
             }
 
             #region 保存时处理正则表达式验证
@@ -2440,6 +2443,9 @@ namespace CCFlow.WF.UC
             }
             #endregion 判断是否是手机.
 
+            //获得活动的控件.
+            string activeFilds = BP.WF.Glo.GenerActiveFiels(mes, null, en, md, mattrs);
+
             #region 输出Ele
             FrmEles eles = this.mapData.FrmEles;
             if (eles.Count >= 1)
@@ -2718,11 +2724,10 @@ namespace CCFlow.WF.UC
                 string sql = "";
 
                 //重新加载 可能有缓存
-                img.Retrieve("MyPk", img.MyPK);
+                img.RetrieveFromDBSources(); 
                 //0.不可以修改，从数据表中取，1可以修改，使用组合获取并保存数据
-                if (img.IsEdit == 1 && this.IsReadonly == false)
+                if ((img.IsEdit == 1 && this.IsReadonly == false) || activeFilds.Contains(img.MyPK + ","))
                 {
-
                     #region 加载签章
                     //如果设置了部门与岗位的集合进行拆分
                     if (!string.IsNullOrEmpty(img.Tag0) && img.Tag0.Contains("^") && img.Tag0.Split('^').Length == 4)
@@ -2769,7 +2774,6 @@ namespace CCFlow.WF.UC
                             break;
                         }
                     }
-
                     #endregion 加载签章
 
                     imgSrc = CCFlowAppPath + "DataUser/Seal/" + fk_dept + "_" + stationNo + ".png";
@@ -2812,14 +2816,13 @@ namespace CCFlow.WF.UC
                     objQuery.AddWhere(FrmEleAttr.FK_MapData, img.EnPK);
                     objQuery.addAnd();
                     objQuery.AddWhere(FrmEleAttr.EleID, this.HisEn.GetValStrByKey("OID"));
-                    objQuery.DoQuery();
-                    if (objQuery.GetCount() == 0)
+
+                    if (objQuery.DoQuery() == 0)
                     {
                         FrmEleDBs imgdbs = new FrmEleDBs();
                         QueryObject objQuerys = new QueryObject(imgdbs);
                         objQuerys.AddWhere(FrmEleAttr.EleID, this.HisEn.GetValStrByKey("OID"));
-                        int count = objQuerys.DoQuery();
-                        if (count > 0)
+                        if (objQuerys.DoQuery() > 0)
                         {
                             foreach (FrmEleDB single in imgdbs)
                             {
@@ -2828,8 +2831,8 @@ namespace CCFlow.WF.UC
                                     single.FK_MapData = img.EnPK;
                                     single.MyPK = img.EnPK + "_" + this.HisEn.GetValStrByKey("OID") + "_" + img.EnPK;
                                     single.RefPKVal = img.EnPK;
-                                    single.DirectInsert();
-                                    realDB = single;
+                                  //  single.DirectInsert();
+                                  //  realDB = single; cut by zhoupeng .没有看明白.
                                     break;
                                 }
                             }
@@ -2843,12 +2846,16 @@ namespace CCFlow.WF.UC
                     {
                         realDB = imgDb;
                     }
-                    imgSrc = realDB.Tag1;
-                    //如果没有查到记录，控件不显示。说明没有走盖章的一步
-                    x = img.X + wtX;
-                    this.Add("\t\n<DIV id=" + img.MyPK + " style='position:absolute;left:" + x + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
-                    this.Add("\t\n<img src='" + imgSrc + "' onerror='javascript:this.src='" + appPath + "DataUser/ICON/" + BP.Sys.SystemConfig.CustomerNo + "/LogBiger.png';' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' />");
-                    this.Add("\t\n</DIV>");
+
+                    if (realDB != null)
+                    {
+                        imgSrc = realDB.Tag1;
+                        //如果没有查到记录，控件不显示。说明没有走盖章的一步
+                        x = img.X + wtX;
+                        this.Add("\t\n<DIV id=" + img.MyPK + " style='position:absolute;left:" + x + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
+                        this.Add("\t\n<img src='" + imgSrc + "' onerror='javascript:this.src='" + appPath + "DataUser/ICON/" + BP.Sys.SystemConfig.CustomerNo + "/LogBiger.png';' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' />");
+                        this.Add("\t\n</DIV>");
+                    }
                 }
                 #endregion
             }
@@ -2916,8 +2923,9 @@ namespace CCFlow.WF.UC
                     #region 判断权限
                     bool isEdit = false;//是否可以编辑签名
                     string v = en.GetValStrByKey(attr.KeyOfEn);
+
                     //如果为空，默认使用当前登录人签名
-                    if (string.IsNullOrEmpty(v))
+                    if (string.IsNullOrEmpty(v) && activeFilds.Contains(attr.KeyOfEn+",") )
                         v = WebUser.No;
 
                     //如果为只读并且为空，显示为未签名
@@ -2929,6 +2937,7 @@ namespace CCFlow.WF.UC
                         isEdit = true;
                         v = "sigan-readonly";
                     }
+
                     if (this.FK_Node != 0 && this.IsReadonly == false)
                     {
                         //获取表单方案，如果为可编辑，则对属性设置为true
@@ -2946,13 +2955,15 @@ namespace CCFlow.WF.UC
                         if (info.DoQuery() > 0)
                         {
                             isEdit = true;//可编辑，如果值为空显示可编辑图片
-                            if (string.IsNullOrEmpty(v)) v = "siganture";
+                            if (string.IsNullOrEmpty(v)) 
+                                v = "siganture";
                         }
                         else
                         {
                             isEdit = false;
                             //不可编辑，如果值为空显示不可编辑图片
-                            if (string.IsNullOrEmpty(v)) v = "sigan-readonly";
+                            if (string.IsNullOrEmpty(v)) 
+                                v = "sigan-readonly";
                         }
                     }
                     #endregion 判断权限
@@ -2960,7 +2971,7 @@ namespace CCFlow.WF.UC
                     #region 图片签名 (dai guoqiang)
                     if (attr.SignType == SignType.Pic)
                     {
-                        //如果为可编辑，对签名进行修改
+                        //如果为可编辑，对签名进行修改.
                         if (isEdit)
                         {
                             this.Add("<img src='" + appPath + "DataUser/Siganture/" + v + ".jpg' "
@@ -2969,13 +2980,31 @@ namespace CCFlow.WF.UC
                         }
                         else
                         {
+                            //zhoupeng 增加业务逻辑判断, 不影响以前的逻辑 for 动态字段的需要..
+                            if (activeFilds != "")
+                            {
+                                /* 有动态字段的权限情况. */
+                                string myuser = en.GetValStringByKey(attr.KeyOfEn);
+                                if (myuser == "" && activeFilds.Contains(attr.KeyOfEn + ",") == false)
+                                {
+                                    /*说明没有签名,直接输出图片.*/
+                                    v = "sigan-readonly";
+                                }
+                                if (myuser == "" && activeFilds.Contains(attr.KeyOfEn + ",") == true)
+                                {
+                                    v = BP.Web.WebUser.No;
+
+                                    //直接更新到数据库里.
+                                    en.Update(attr.KeyOfEn, WebUser.No);
+                                }
+                            }
+
                             this.Add("<img  style='border:0px;width:90px;' src='" + appPath + "DataUser/Siganture/" + v + ".jpg' border=0 onerror=\"this.src='" + appPath + "DataUser/Siganture/UnName.jpg'\"/>");
+
                         }
-
-
                     } //结束图片签名.
-                    #endregion 结束图片签名
 
+                    #endregion 结束图片签名
 
                     #region 广东CA签名 (zhoupeng 2016-03-12)
                     if (attr.SignType == SignType.GDCA)
@@ -3100,9 +3129,17 @@ namespace CCFlow.WF.UC
                     tb.ID = "TB_" + attr.KeyOfEn;
                     if (attr.UIIsEnable == false || isReadonly == true)
                     {
-                        tb.Attributes.Add("readonly", "true");
-                        tb.CssClass = "TBReadonly";
-                        tb.ReadOnly = true;
+                        if (activeFilds.Contains(attr.KeyOfEn + ",") == false)
+                        {
+                            /*如果动态字段不包含他们. */
+                            tb.Attributes.Add("readonly", "true");
+                            tb.CssClass = "TBReadonly";
+                            tb.ReadOnly = true;
+                        }
+                        else
+                        {
+                            tb.Attributes["onchange"] += "Change('" + attr.FK_MapData + "');";
+                        }
                     }
                     else
                     {
@@ -3165,10 +3202,14 @@ namespace CCFlow.WF.UC
                                     else
                                         tb.Text = attr.DefVal;
 
-                                    if (attr.UIIsEnable && isReadonly == false)
+                                    if ((attr.UIIsEnable && isReadonly == false) || activeFilds.Contains(attr.KeyOfEn + ","))
+                                    {
                                         tb.CssClass = "TB";
+                                    }
                                     else
+                                    {
                                         tb.CssClass = "TBReadonly";
+                                    }
 
                                     fSize = attr.Para_FontSize;
                                     if (fSize == 0)
@@ -3196,23 +3237,28 @@ namespace CCFlow.WF.UC
                                     tb.Attributes["maxlength"] = attr.MaxLen.ToString();
                                     tb.Rows = attr.UIRows;
 
-                                    if (attr.UIIsEnable && isReadonly == false)
+                                    if ( (attr.UIIsEnable && isReadonly == false) || activeFilds.Contains(attr.KeyOfEn + ",")  )
                                     {
                                         tb.CssClass = "TBDoc";
                                         tb.Attributes["onclick"] = "ShowHelpDiv('" + tb.ID + "','" + appPath + "','" + attr.KeyOfEn + "','" + enName + "','wordhelp');";
                                     }
                                     else
-                                        tb.CssClass = "TBReadonly";
+                                    {
+                                            tb.CssClass = "TBReadonly";
+                                    }
                                     this.Add(tb);
                                 }
                                 break;
                             case BP.DA.DataType.AppDate:
                                 tb.ShowType = TBType.Date;
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                if (attr.UIIsEnable && this.IsReadonly == false)
+                                if ((attr.UIIsEnable && this.IsReadonly == false) ||  activeFilds.Contains(attr.KeyOfEn + ","))
                                 {
                                     tb.Attributes["onfocus"] = "WdatePicker();";
                                     tb.Attributes["class"] = "TB";
+
+                                    if (tb.Text == "" && attr.DefValReal == "@RDT")
+                                        tb.Text = BP.DA.DataType.CurrentData;
                                 }
                                 else
                                     tb.Attributes["class"] = "TBReadonly";
@@ -3228,13 +3274,17 @@ namespace CCFlow.WF.UC
                                 tb.ShowType = TBType.DateTime;
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
 
-                                if (attr.UIIsEnable && this.IsReadonly == false)
+                                if ((attr.UIIsEnable && this.IsReadonly == false) || activeFilds.Contains(attr.KeyOfEn + ","))
+                                {
                                     tb.Attributes["class"] = "TBcalendar";
+                                    tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
+
+                                    if (tb.Text == "" && attr.DefValReal == "@RDT" )
+                                        tb.Text = BP.DA.DataType.CurrentData;
+
+                                }
                                 else
                                     tb.Attributes["class"] = "TBReadonly";
-
-                                if (attr.UIIsEnable)
-                                    tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
 
                                 fSize = attr.Para_FontSize;
                                 if (fSize == 0)
@@ -3252,8 +3302,10 @@ namespace CCFlow.WF.UC
                                 cb.Checked = attr.DefValOfBool;
                                 cb.Enabled = attr.UIIsEnable;
                                 cb.Checked = en.GetValBooleanByKey(attr.KeyOfEn);
-                                if (cb.Enabled == false || isReadonly == true)
+                                if ((cb.Enabled == false && activeFilds.Contains(attr.KeyOfEn + ",")==false ) || isReadonly == true)
+                                {
                                     cb.Enabled = false;
+                                }
                                 else
                                 {
                                     //add by dgq 2013-4-9,添加内容修改后的事件
@@ -3273,7 +3325,7 @@ namespace CCFlow.WF.UC
 
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
 
-                                if (attr.UIIsEnable && isReadonly == false)
+                                if ((attr.UIIsEnable && isReadonly == false) || activeFilds.Contains(attr.KeyOfEn + ","))
                                 {
                                     //增加验证
                                     //tb.Attributes.Add("onkeyup", @"value=value.replace(/[^-?\d+\.*\d*$]/g,'');Change('" + attr.FK_MapData + "');");
@@ -3286,7 +3338,9 @@ namespace CCFlow.WF.UC
                                     tb.Attributes["class"] = "TBNum";
                                 }
                                 else
+                                {
                                     tb.Attributes["class"] = "TBReadonly";
+                                }
 
                                 this.Add(tb);
                                 break;
@@ -3300,7 +3354,7 @@ namespace CCFlow.WF.UC
                                     tb.Attributes["style"] = "font-size: " + fSize + "px;width: " + attr.UIWidth + "px; text-align: right; height: " + fSize + "px;";
 
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                if (attr.UIIsEnable && isReadonly == false)
+                                if ( (attr.UIIsEnable && isReadonly == false) || activeFilds.Contains(attr.KeyOfEn + ","))
                                 {
                                     //增加验证
                                     tb.Attributes.Add("onkeyup", @"Change('" + attr.FK_MapData + "');");
@@ -3326,7 +3380,7 @@ namespace CCFlow.WF.UC
                                     tb.Attributes["style"] = "font-size: " + fSize + "px;width: " + attr.UIWidth + "px; text-align: right; height: " + fSize + "px;";
 
 
-                                if (attr.UIIsEnable && isReadonly == false)
+                                if ((attr.UIIsEnable && isReadonly == false ) || activeFilds.Contains(attr.KeyOfEn + ","))
                                 {
                                     //增加验证
                                     tb.Attributes.Add("onkeyup", @"Change('" + attr.FK_MapData + "');");
@@ -3355,7 +3409,7 @@ namespace CCFlow.WF.UC
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppRate:
-                                if (attr.UIIsEnable && isReadonly == false)
+                                if ( (attr.UIIsEnable && isReadonly == false) ||  activeFilds.Contains(attr.KeyOfEn + ","))
                                     tb.Attributes["class"] = "TBNum";
                                 else
                                     tb.Attributes["class"] = "TBReadonly";
@@ -3382,17 +3436,21 @@ namespace CCFlow.WF.UC
                         {
                             DDL ddle = new DDL();
                             ddle.ID = "DDL_" + attr.KeyOfEn;
-                            ddle.BindSysEnum(attr.UIBindKey);
-                            ddle.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
-                            ddle.Enabled = attr.UIIsEnable;
                             ddle.Attributes["tabindex"] = attr.Idx.ToString();
-                            if (attr.UIIsEnable)
+                            if (attr.UIIsEnable || activeFilds.Contains(attr.KeyOfEn + ","))
                             {
+                                ddle.BindSysEnum(attr.UIBindKey);
+                                ddle.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
+                                ddle.Enabled = true;
+
                                 //add by dgq 2013-4-9,添加内容修改后的事件
                                 ddle.Attributes["onchange"] = "Change('" + attr.FK_MapData + "')";
                             }
-                            if (ddle.Enabled == true && isReadonly == true)
+                            else
+                            {
+                                ddle.Items.Add( new ListItem(en.GetValRefTextByKey( attr.KeyOfEn ), en.GetValStringByKey( attr.KeyOfEn ) ));
                                 ddle.Enabled = false;
+                            }
                             this.Add(ddle);
                         }
                         else
@@ -3406,12 +3464,12 @@ namespace CCFlow.WF.UC
                         DDL ddlFK = new DDL();
                         ddlFK.ID = "DDL_" + attr.KeyOfEn;
                         ddlFK.Attributes["tabindex"] = attr.Idx.ToString();
-                        ddlFK.Enabled = attr.UIIsEnable;
                         this.Add(ddlFK);
-                        if (ddlFK.Enabled)
+                        if (ddlFK.Enabled ||  activeFilds.Contains(attr.KeyOfEn + ",") )
                         {
                             EntitiesNoName ens = attr.HisEntitiesNoName;
                             ens.RetrieveAll();
+                            ddlFK.Enabled = true;
 
                             //added by liuxc，2015-10-22
                             //此处判断是否含有级联下拉框的情况，如果此属性是级联的下拉框，则判断其引起级联的属性值，根据此值只加载其级联子项
@@ -3509,10 +3567,9 @@ namespace CCFlow.WF.UC
                                     text = val;
                             }
                             ddlFK.Items.Add(new ListItem(text, val));
-                        }
-                        if (attr.UIIsEnable == true && this.IsReadonly == true)
+
                             ddlFK.Enabled = false;
-                        //this.Add(ddlFK);
+                        }
                         break;
                     default:
                         break;

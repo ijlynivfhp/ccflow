@@ -134,9 +134,13 @@ namespace CCFlow.WF.WorkOpt
             FrmWorkCheck wcDesc = new FrmWorkCheck(this.NodeID);
 
             if (wcDesc.HisFrmWorkShowModel == FrmWorkShowModel.Free)
+            {
                 this.BindFreeModel(wcDesc);
+            }
             else if (wcDesc.HisFrmWorkShowModel == FrmWorkShowModel.Table)
+            {
                 this.BindFreeModel(wcDesc);
+            }
         }
         /// <summary>
         /// 实现的功能：
@@ -150,12 +154,14 @@ namespace CCFlow.WF.WorkOpt
         /// <param name="wcDesc"></param>
         public void BindFreeModel(FrmWorkCheck wcDesc)
         {
+            //获得配置信息.
             BP.WF.WorkCheck wc = null;
             if (this.FID != 0)
                 wc = new WorkCheck(this.FK_Flow, this.NodeID, this.FID, 0);
             else
                 wc = new WorkCheck(this.FK_Flow, this.NodeID, this.WorkID, this.FID);
 
+            //检查是否可以处理当前工作.
             bool isCanDo = BP.WF.Dev2Interface.Flow_IsCanDoCurrentWork(this.FK_Flow, this.NodeID, this.WorkID, BP.Web.WebUser.No);
 
             bool isExitTb_doc = true;
@@ -320,7 +326,17 @@ namespace CCFlow.WF.WorkOpt
                                 else
                                 {
                                     //用户签名信息，显示签名or图片
-                                    string sigantrueHtml = wcDesc.SigantureEnabel == true ? BP.WF.Glo.GenerUserSigantureHtml(tk.EmpFrom, tk.EmpFromT) : BP.WF.Glo.GenerUserImgSmallerHtml(tk.EmpFrom, tk.EmpFromT);
+                                    string sigantrueHtml = "";
+
+                                    if (wcDesc.SigantureEnabel)
+                                    {
+                                        sigantrueHtml = BP.WF.Glo.GenerUserSigantureHtml(tk.EmpFrom, tk.EmpFromT);
+                                    }
+                                    else
+                                    {
+                                        sigantrueHtml = BP.WF.Glo.GenerUserImgSmallerHtml(tk.EmpFrom, tk.EmpFromT);
+                                    }
+
                                     //审核组件附件数据
                                     FrmAttachmentDBs athDBs = new FrmAttachmentDBs();
                                     QueryObject obj_Ath = new QueryObject(athDBs);
@@ -762,7 +778,6 @@ namespace CCFlow.WF.WorkOpt
             } // 输出轨迹.
             #endregion 输出轨迹
 
-
             #region 处理审核意见框.
             if (IsHidden == false
                 && wcDesc.HisFrmWorkCheckSta == FrmWorkCheckSta.Enable
@@ -815,7 +830,7 @@ namespace CCFlow.WF.WorkOpt
 
                     this.Pub1.AddTable("  border=1 style='padding:0px;width:100%;' leftMargin=0 topMargin=0");
                     //配置字段解析
-                    if (!string.IsNullOrEmpty(wcDesc.FWCFields))
+                    if (!string.IsNullOrEmpty(wcDesc.FWCFields)==false)
                     {
                         this.Pub1.AddTR();
                         //不需要常用词汇

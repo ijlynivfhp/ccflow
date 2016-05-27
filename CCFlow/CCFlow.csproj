@@ -121,6 +121,7 @@
     <Content Include="SDKFlowDemo\GuestApp\Runing.aspx" />
     <Content Include="SDKFlowDemo\SDK\SDKComponents\F159\S15901.aspx" />
     <Content Include="SDKFlowDemo\SDK\SDKComponents\F160\S16001.aspx" />
+    <Content Include="SDKFlowDemo\TestCase\StartGuideSelfUrlEntity.aspx" />
     <Content Include="SDKFlowDemo\TestCase\StartGuideSelfUrl.aspx" />
     <Content Include="SDKFlowDemo\UnitTesting\Testing.aspx" />
     <Content Include="Service References\CloundWS\configuration.svcinfo" />
@@ -139,6 +140,8 @@
     <Content Include="WF\Admin\AttrNode\PushMessage.aspx" />
     <Content Include="WF\Admin\AttrNode\PushMessageEntity.aspx" />
     <Content Include="WF\Admin\AttrNode\SDKComponents.aspx" />
+    <Content Include="WF\Admin\AttrNode\SepcFiledsSepcUsers.aspx" />
+    <Content Include="WF\Admin\AttrNode\SepcFiledsSepcUsersDtl.aspx" />
     <Content Include="WF\Admin\AttrNode\TurnToDeal.aspx" />
     <Content Include="WF\Admin\CCFormDesigner\FrmAttr.aspx" />
     <Content Include="WF\Admin\CCFormDesigner\NewFrmGuideNew.aspx" />
@@ -1368,6 +1371,7 @@
     <Content Include="WF\Data\ImpTableField.txt" />
     <Content Include="WF\Draft.aspx" />
     <Content Include="WF\ErrorPage.aspx" />
+    <Content Include="WF\FlowCheck\MyFlow.aspx" />
     <Content Include="WF\FlowRpt.aspx" />
     <Content Include="WF\Focus.aspx" />
     <Content Include="WF\Img\redo.png" />
@@ -1383,14 +1387,12 @@
     <Content Include="WF\MapDef\MapExt\AotuGenerNo.aspx" />
     <Content Include="WF\MapDef\MapExt\AutoFull.aspx" />
     <Content Include="WF\MapDef\MapExt\AutoFullDLL.aspx" />
-    <Content Include="WF\MapDef\MapExt\AutoFullDLL_old.aspx" />
+    <Content Include="WF\MapDef\MapExt\BodyAttr.aspx" />
     <Content Include="WF\MapDef\MapExt\DDLFullCtrl.aspx" />
-    <Content Include="WF\MapDef\MapExt\DDLFullCtrl_old.aspx" />
     <Content Include="WF\MapDef\MapExt\ExcelFrm.aspx" />
     <Content Include="WF\MapDef\MapExt\InitScript.aspx" />
     <Content Include="WF\MapDef\MapExt\List.aspx" />
     <Content Include="WF\MapDef\MapExt\PageLoadFull.aspx" />
-    <Content Include="WF\MapDef\MapExt\PopVal_Old.aspx" />
     <Content Include="WF\MapDef\MapExt\PopVal.aspx" />
     <Content Include="WF\MapDef\MapExt\RadioBtns.aspx" />
     <Content Include="WF\MapDef\MapExt\RegularExpression.aspx" />
@@ -1399,6 +1401,7 @@
     <Content Include="WF\MapDef\MapExt\TBFullCtrl_List.aspx" />
     <Content Include="WF\MapDef\MapExt\TBFullCtrl_old.aspx" />
     <Content Include="WF\MapDef\MapExt\WordFrm.aspx" />
+    <Content Include="WF\MapDef\MapExt\RegularExpressionBatch.aspx" />
     <Content Include="WF\MapDef\SFSQL.aspx" />
     <Content Include="WF\MapDef\EditSQL.aspx" />
     <Content Include="WF\MapDef\SFWS.aspx" />
@@ -1440,39 +1443,305 @@
     <Content Include="WF\Scripts\Cookie.js" />
     <Content Include="WF\Scripts\designer.utility.js" />
     <Content Include="WF\Scripts\EasyUIUtility.js" />
+    <Content Include="WF\Scripts\easyUI\demo.css" />
+    <Content Include="WF\Scripts\easyUI\easyloader.js" />
+    <Content Include="WF\Scripts\easyUI\jquery-1.8.0.min.js" />
+    <Content Include="WF\Scripts\easyUI\jquery.easyui.min.js" />
+    <Content Include="WF\Scripts\easyUI\locale\easyui-lang-en.js" />
+    <Content Include="WF\Scripts\easyUI\locale\easyui-lang-zh_CN.js" />
+    <Content Include="WF\Scripts\easyUI\locale\easyui-lang-zh_TW.js" />
+    <Content Include="WF\Scripts\easyUI\plugins\datagrid-detailview.js" />
+    <Content Include="WF\Scripts\easyUI\src\easyloader.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.accordion.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.calendar.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.combobox.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.datebox.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.draggable.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.droppable.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.form.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.linkbutton.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.menu.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.parser.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.progressbar.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.propertygrid.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.resizable.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.slider.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.tabs.js" />
+    <Content Include="WF\Scripts\easyUI\src\jquery.window.js" />
+    <Content Include="WF\Scripts\easyUI\themes\default\accordion.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\calendar.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\combo.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\combobox.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\datagrid.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\datebox.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\dialog.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\easyui.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\accordion_arrows.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\accordion_collapse.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\accordion_expand.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\blank.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\button_a_bg.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\button_plain_hover.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\button_span_bg.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\calendar_arrows.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\calendar_nextmonth.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\calendar_nextyear.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\calendar_prevmonth.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\calendar_prevyear.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\combo_arrow.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\combo_arrow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_header_bg.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_icons.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_row_collapse.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_row_expand.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_sort_asc.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_sort_desc.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_title_bg.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\datebox_arrow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\layout_arrows.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\layout_button_down.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\layout_button_left.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\layout_button_right.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\layout_button_up.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\linkbutton_bg.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\loading.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\menu.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\menu_arrows.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\menu_downarrow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\menu_rightarrow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\menu_sep.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\menu_split_downarrow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\messager_error.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\messager_icons.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\messager_info.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\messager_question.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\messager_warning.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\pagination_first.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\pagination_icons.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\pagination_last.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\pagination_load.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\pagination_loading.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\pagination_next.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\pagination_prev.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\panel_loading.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\panel_title.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\panel_tools.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\panel_tools.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\panel_tool_collapse.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\panel_tool_expand.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\searchbox_button.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\slider_handle.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\spinner_arrows.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\spinner_arrow_down.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\spinner_arrow_up.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tabs_active.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tabs_close.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tabs_enabled.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tabs_icons.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tabs_leftarrow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tabs_rightarrow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_arrows.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_checkbox_0.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_checkbox_1.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_checkbox_2.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_dnd_no.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_dnd_yes.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_elbow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_file.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_folder.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_folder_open.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_icons.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_loading.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\validatebox_pointer.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\default\images\validatebox_warning.png" />
+    <Content Include="WF\Scripts\easyUI\themes\default\layout.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\linkbutton.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\menu.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\menubutton.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\messager.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\pagination.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\panel.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\progressbar.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\propertygrid.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\searchbox.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\slider.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\spinner.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\splitbutton.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\tabs.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\tooltip.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\tree.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\validatebox.css" />
+    <Content Include="WF\Scripts\easyUI\themes\default\window.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\accordion.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\calendar.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\combo.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\combobox.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\datagrid.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\datebox.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\dialog.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\easyui.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\accordion_collapse.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\accordion_expand.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\blank.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\button_a_bg.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\button_plain_hover.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\button_span_bg.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\calendar_nextmonth.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\calendar_nextyear.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\calendar_prevmonth.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\calendar_prevyear.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\combo_arrow.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\datagrid_header_bg.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\datagrid_row_collapse.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\datagrid_row_expand.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\datagrid_sort_asc.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\datagrid_sort_desc.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\datagrid_title_bg.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\datebox_arrow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\layout_arrows.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\menu.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\menu_downarrow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\menu_rightarrow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\menu_sep.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\menu_split_downarrow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\messager_error.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\messager_info.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\messager_question.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\messager_warning.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\pagination_first.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\pagination_last.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\pagination_load.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\pagination_loading.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\pagination_next.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\pagination_prev.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\panel_loading.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\panel_title.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\panel_tools.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\panel_tool_collapse.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\panel_tool_expand.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\searchbox_button.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\slider_handle.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\spinner_arrow_down.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\spinner_arrow_up.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tabs_close.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tabs_enabled.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tabs_leftarrow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tabs_rightarrow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tree_arrows.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tree_checkbox_0.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tree_checkbox_1.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tree_checkbox_2.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tree_dnd_no.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tree_dnd_yes.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tree_elbow.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tree_file.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tree_folder.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tree_folder_open.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\tree_loading.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\validatebox_pointer.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\images\validatebox_warning.png" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\layout.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\linkbutton.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\menu.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\menubutton.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\messager.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\pagination.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\panel.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\progressbar.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\propertygrid.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\searchbox.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\slider.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\spinner.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\splitbutton.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\tabs.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\tree.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\validatebox.css" />
+    <Content Include="WF\Scripts\easyUI\themes\gray\window.css" />
+    <Content Include="WF\Scripts\easyUI\themes\icon.css" />
     <Content Include="WF\Scripts\easyUI\themes\icons\accept.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\add.gif" />
     <Content Include="WF\Scripts\easyUI\themes\icons\add2.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\addfile.gif" />
     <Content Include="WF\Scripts\easyUI\themes\icons\addfolder.gif" />
     <Content Include="WF\Scripts\easyUI\themes\icons\auto.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\back.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\bind.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\blank.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\cancel.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\check.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\columnchart.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\config.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\copy.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\cut.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\delete.gif" />
     <Content Include="WF\Scripts\easyUI\themes\icons\delete.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\delete2.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\department.gif" />
     <Content Include="WF\Scripts\easyUI\themes\icons\department.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\design.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\down.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\edit_add.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\edit_remove.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\excel.gif" />
     <Content Include="WF\Scripts\easyUI\themes\icons\export.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\filesave.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\flow_childline.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\form1.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\gongneng.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\GPM.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\groupadd.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\Guide.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\help.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\home.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\icon.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\icon_meeting.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\insert.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\kongzhidian.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\left.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\library.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\linechart.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\little.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\loading.gif" />
     <Content Include="WF\Scripts\easyUI\themes\icons\manual.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\mini_add.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\mini_edit.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\mini_refresh.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\mulu.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\new.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\no.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\ok.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\open.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\pencil.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\person.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\picture.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\piechart.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\print.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\property.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\redo.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\refuse.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\reload.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\report_start.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\reset.gif" />
     <Content Include="WF\Scripts\easyUI\themes\icons\reset.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\right.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\rights.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\save_close.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\seal.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\search.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\search.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\seasons.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\sheet.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\station.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\Station1.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\sum.png" />
     <Content Include="WF\Scripts\easyUI\themes\icons\table.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\tip.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\tree_folder.gif" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\undo.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\up.gif" />
     <Content Include="WF\Scripts\easyUI\themes\icons\user.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\xitong.png" />
+    <Content Include="WF\Scripts\easyUI\themes\icons\xitongleibie.png" />
     <Content Include="WF\Scripts\FrmReportField.js" />
     <Content Include="WF\Scripts\FrmReportFieldReadOnly.js" />
     <Content Include="WF\Scripts\LoadWebOffice.js" />
@@ -1613,156 +1882,6 @@
     <Content Include="WF\Rpt\UC\Search.ascx" />
     <Content Include="WF\Rpt\UC\ToolBar.ascx" />
     <Content Include="WF\Scripts\CreateControl.js" />
-    <Content Include="WF\Scripts\easyUI\easyloader.js" />
-    <Content Include="WF\Scripts\easyUI\jquery-1.8.0.min.js" />
-    <Content Include="WF\Scripts\easyUI\jquery.easyui.min.js" />
-    <Content Include="WF\Scripts\easyUI\src\easyloader.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.accordion.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.calendar.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.combobox.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.datebox.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.draggable.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.droppable.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.form.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.linkbutton.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.menu.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.parser.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.progressbar.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.propertygrid.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.resizable.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.slider.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.tabs.js" />
-    <Content Include="WF\Scripts\easyUI\src\jquery.window.js" />
-    <Content Include="WF\Scripts\easyUI\themes\default\accordion.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\calendar.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\combo.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\combobox.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\datagrid.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\datebox.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\dialog.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\easyui.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\accordion_arrows.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\accordion_collapse.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\accordion_expand.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\blank.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\button_a_bg.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\button_plain_hover.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\button_span_bg.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\calendar_arrows.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\calendar_nextyear.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\calendar_prevyear.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\combo_arrow.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\combo_arrow.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_header_bg.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_icons.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_row_collapse.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_row_expand.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_sort_asc.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_sort_desc.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\datagrid_title_bg.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\datebox_arrow.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\layout_arrows.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\linkbutton_bg.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\loading.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\menu.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\menu_arrows.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\menu_downarrow.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\menu_rightarrow.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\menu_split_downarrow.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\messager_icons.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\messager_info.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\messager_question.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\pagination_first.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\pagination_icons.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\pagination_last.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\pagination_loading.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\pagination_next.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\pagination_prev.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\panel_loading.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\panel_title.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\panel_tools.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\panel_tools.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\searchbox_button.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\slider_handle.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\spinner_arrows.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tabs_active.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tabs_enabled.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tabs_icons.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tabs_leftarrow.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tabs_rightarrow.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_arrows.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_checkbox_0.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_checkbox_1.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_checkbox_2.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_dnd_yes.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_elbow.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_file.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_folder.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_folder_open.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_icons.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\tree_loading.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\validatebox_pointer.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\default\images\validatebox_warning.png" />
-    <Content Include="WF\Scripts\easyUI\themes\default\layout.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\linkbutton.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\menu.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\menubutton.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\messager.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\pagination.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\panel.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\progressbar.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\propertygrid.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\searchbox.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\slider.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\spinner.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\splitbutton.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\tabs.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\tooltip.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\tree.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\validatebox.css" />
-    <Content Include="WF\Scripts\easyUI\themes\default\window.css" />
-    <Content Include="WF\Scripts\easyUI\themes\icon.css" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\add.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\back.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\blank.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\cancel.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\config.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\cut.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\delete.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\down.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\edit_add.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\edit_remove.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\filesave.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\gongneng.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\help.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\home.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\kongzhidian.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\loading.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\mini_add.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\mini_edit.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\mini_refresh.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\mulu.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\new.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\no.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\ok.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\pencil.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\person.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\print.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\redo.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\reload.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\reset.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\rights.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\save_close.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\search.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\search.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\seasons.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\sum.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\tip.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\tree_folder.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\undo.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\up.gif" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\xitong.png" />
-    <Content Include="WF\Scripts\easyUI\themes\icons\xitongleibie.png" />
     <Content Include="WF\Scripts\FlowFormTreeData.js" />
     <Content Include="WF\Scripts\GRInstall.js" />
     <Content Include="WF\Scripts\GRUtility.js" />
@@ -2446,7 +2565,6 @@
     <Content Include="WF\Login.aspx" />
     <Content Include="WF\MapDef\Action.aspx" />
     <Content Include="WF\MapDef\Attachment.aspx" />
-    <Content Include="WF\MapDef\MapExt\AutoFull_old.aspx" />
     <Content Include="WF\MapDef\CCForm\CCForm.asmx" />
     <Content Include="WF\MapDef\CCForm\Frm.aspx" />
     <Content Include="WF\MapDef\CCForm\TableToFree.aspx" />
@@ -3333,6 +3451,13 @@
     <Compile Include="SDKFlowDemo\TestCase\BatchSelfFrm.aspx.designer.cs">
       <DependentUpon>BatchSelfFrm.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SDKFlowDemo\TestCase\StartGuideSelfUrlEntity.aspx.cs">
+      <DependentUpon>StartGuideSelfUrlEntity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SDKFlowDemo\TestCase\StartGuideSelfUrlEntity.aspx.designer.cs">
+      <DependentUpon>StartGuideSelfUrlEntity.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SDKFlowDemo\TestCase\iframePage.aspx.cs">
       <DependentUpon>iframePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3619,6 +3744,20 @@
     </Compile>
     <Compile Include="WF\Admin\AttrNode\SDKComponents.aspx.designer.cs">
       <DependentUpon>SDKComponents.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WF\Admin\AttrNode\SepcFiledsSepcUsers.aspx.cs">
+      <DependentUpon>SepcFiledsSepcUsers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\Admin\AttrNode\SepcFiledsSepcUsers.aspx.designer.cs">
+      <DependentUpon>SepcFiledsSepcUsers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WF\Admin\AttrNode\SepcFiledsSepcUsersDtl.aspx.cs">
+      <DependentUpon>SepcFiledsSepcUsersDtl.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\Admin\AttrNode\SepcFiledsSepcUsersDtl.aspx.designer.cs">
+      <DependentUpon>SepcFiledsSepcUsersDtl.aspx</DependentUpon>
     </Compile>
     <Compile Include="WF\Admin\AttrNode\SubFlows.aspx.cs">
       <DependentUpon>SubFlows.aspx</DependentUpon>
@@ -4857,6 +4996,20 @@
     <Compile Include="WF\ErrorPage.aspx.designer.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WF\FlowCheck\MyFlow.aspx.cs">
+      <DependentUpon>MyFlow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\FlowCheck\MyFlow.aspx.designer.cs">
+      <DependentUpon>MyFlow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WF\FlowCheck\Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\FlowCheck\Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
     <Compile Include="WF\FlowRpt.aspx.cs">
       <DependentUpon>FlowRpt.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4913,12 +5066,12 @@
     <Compile Include="WF\MapDef\MapExt\AutoFullDLL.aspx.designer.cs">
       <DependentUpon>AutoFullDLL.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WF\MapDef\MapExt\AutoFullDLL_old.aspx.cs">
-      <DependentUpon>AutoFullDLL_old.aspx</DependentUpon>
+    <Compile Include="WF\MapDef\MapExt\BodyAttr.aspx.cs">
+      <DependentUpon>BodyAttr.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WF\MapDef\MapExt\AutoFullDLL_old.aspx.designer.cs">
-      <DependentUpon>AutoFullDLL_old.aspx</DependentUpon>
+    <Compile Include="WF\MapDef\MapExt\BodyAttr.aspx.designer.cs">
+      <DependentUpon>BodyAttr.aspx</DependentUpon>
     </Compile>
     <Compile Include="WF\MapDef\MapExt\DDLFullCtrl.aspx.cs">
       <DependentUpon>DDLFullCtrl.aspx</DependentUpon>
@@ -4926,13 +5079,6 @@
     </Compile>
     <Compile Include="WF\MapDef\MapExt\DDLFullCtrl.aspx.designer.cs">
       <DependentUpon>DDLFullCtrl.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WF\MapDef\MapExt\DDLFullCtrl_old.aspx.cs">
-      <DependentUpon>DDLFullCtrl_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WF\MapDef\MapExt\DDLFullCtrl_old.aspx.designer.cs">
-      <DependentUpon>DDLFullCtrl_old.aspx</DependentUpon>
     </Compile>
     <Compile Include="WF\MapDef\MapExt\ExcelFrm.aspx.cs">
       <DependentUpon>ExcelFrm.aspx</DependentUpon>
@@ -4961,13 +5107,6 @@
     </Compile>
     <Compile Include="WF\MapDef\MapExt\PageLoadFull.aspx.designer.cs">
       <DependentUpon>PageLoadFull.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WF\MapDef\MapExt\PopVal_Old.aspx.cs">
-      <DependentUpon>PopVal_Old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WF\MapDef\MapExt\PopVal_Old.aspx.designer.cs">
-      <DependentUpon>PopVal_Old.aspx</DependentUpon>
     </Compile>
     <Compile Include="WF\MapDef\MapExt\PopVal.aspx.cs">
       <DependentUpon>PopVal.aspx</DependentUpon>
@@ -5024,6 +5163,13 @@
     </Compile>
     <Compile Include="WF\MapDef\MapExt\WordFrm.aspx.designer.cs">
       <DependentUpon>WordFrm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WF\MapDef\MapExt\RegularExpressionBatch.aspx.cs">
+      <DependentUpon>RegularExpressionBatch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\MapDef\MapExt\RegularExpressionBatch.aspx.designer.cs">
+      <DependentUpon>RegularExpressionBatch.aspx</DependentUpon>
     </Compile>
     <Compile Include="WF\MapDef\Rpt\RptGuide.Master.cs">
       <DependentUpon>RptGuide.Master</DependentUpon>
@@ -6918,13 +7064,6 @@
     <Compile Include="WF\MapDef\Attachment.aspx.designer.cs">
       <DependentUpon>Attachment.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WF\MapDef\MapExt\AutoFull_old.aspx.cs">
-      <DependentUpon>AutoFull_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WF\MapDef\MapExt\AutoFull_old.aspx.designer.cs">
-      <DependentUpon>AutoFull_old.aspx</DependentUpon>
-    </Compile>
     <Compile Include="WF\MapDef\CCForm\CCForm.asmx.cs">
       <DependentUpon>CCForm.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -7684,7 +7823,6 @@
     <Content Include="WF\Admin\EventEntity\Site.Master" />
     <Content Include="WF\App\Simple\SiteMenu.Master" />
     <Content Include="WF\Admin\Condition.Master" />
-    <None Include="DataUser\TempleteExpEns\BP.WF.Data.MyFlows.xls" />
     <None Include="GPM\themes\default\images\Thumbs.db" />
     <Content Include="GPM\WinOpen.master" />
     <Content Include="WF\Admin\CCFormDesigner\Site.Master" />
@@ -7710,6 +7848,7 @@
     <None Include="WF\Data\Install\License_EH.rtf" />
     <Content Include="WF\CCForm\HanderMapExt.ashx" />
     <Content Include="WF\Data\Templete\SysFields.txt" />
+    <Content Include="WF\FlowCheck\Site.Master" />
     <None Include="WF\Img\Arr\Thumbs.db" />
     <None Include="WF\Img\FileType\Thumbs.db" />
     <Content Include="WF\MapDef\CCForm\HanderMapExt.ashx" />
@@ -7726,9 +7865,9 @@
     <Content Include="WF\Rpt\EasySearch.Master" />
     <Content Include="WF\OneFlow\HanderMapExt.ashx" />
     <Content Include="WF\OneFlow\MasterPage.master" />
-    <None Include="WF\Scripts\easyUI\themes\default\images\Thumbs.db" />
     <Content Include="WF\SDKComponents\Site.Master" />
     <Content Include="WF\SDKComponents\AccSite.Master" />
+    <None Include="WF\Scripts\easyUI\themes\gray\images\Thumbs.db" />
     <None Include="WF\Style\Skin\t2\Thumbs.db" />
     <None Include="WF\Style\Skin\t3\Thumbs.db" />
     <None Include="WF\Style\Skin\t4\Thumbs.db" />
@@ -7746,6 +7885,7 @@
   <ItemGroup>
     <Folder Include="Bin\" />
     <Folder Include="DataUser\OrgData\" />
+    <Folder Include="DataUser\TempleteExpEns\" />
     <Folder Include="WF\Admin\App\" />
     <Folder Include="WF\Admin\CCFormDesigner\lib\sets\" />
     <Folder Include="WF\Admin\ClientBin\NodeIcon\" />
@@ -7754,7 +7894,6 @@
     <Folder Include="WF\Data\JSLib\onchange\" />
     <Folder Include="WF\Data\JSLib\ondblclick\" />
     <Folder Include="WF\Data\JSLib\onkeyup\" />
-    <Folder Include="WF\Scripts\easyUI\plugins\" />
     <Folder Include="WF\WorkOpt\OneWork\Img\" />
   </ItemGroup>
   <ItemGroup>

@@ -125,8 +125,9 @@ namespace BP.WF
         public static string UpdataCCFlowVer()
         {
             #region 检查是否需要升级，并更新升级的业务逻辑.
-            string val = "20160501";
+            string val = "20160526";
             string updataNote = "";
+            updataNote += "20160526.升级FrmEnableRole状态.";
             updataNote += "20160501.升级todosta状态.";
             updataNote += "20160420.升级表单属性.";
             updataNote += "20160226.新版流程FlowJson字段判断..";
@@ -274,6 +275,7 @@ namespace BP.WF
                 sql = "DELETE FROM Sys_Enum WHERE EnumKey IN ('CodeStruct'";
                 sql += ",'DBSrcType'";
                 sql += ",'WebOfficeEnable'";
+                sql += ",'FrmEnableRole'";
                 sql += ",'BlockModel'";
                 sql += ",'CCRole','FWCType','SelectAccepterEnable','NodeFormType','StartGuideWay','" + FlowAttr.StartLimitRole + "','BillFileType','EventDoType','FormType','BatchRole','StartGuideWay','NodeFormType','FormRunType')";
                 BP.DA.DBAccess.RunSQL(sql);
@@ -832,17 +834,20 @@ namespace BP.WF
                 frmSort.Insert();
             }
 
+            //删除这个数据, 没有找到，初始化这些数据失败的原因.
+            BP.DA.DBAccess.RunSQL("DELETE FROM PORT_DEPTSTATION");
+
             string sqlscript = "";
             if (Glo.OSModel == BP.Sys.OSModel.OneOne)
             {
-                /*如果是WorkFlow模式*/
+                /*如果是OneOne模式*/
                 sqlscript = BP.Sys.SystemConfig.CCFlowAppPath + "\\WF\\Data\\Install\\SQLScript\\Port_Inc_CH_WorkFlow.sql";
                 BP.DA.DBAccess.RunSQLScript(sqlscript);
             }
 
             if (Glo.OSModel == BP.Sys.OSModel.OneMore)
             {
-                /*如果是BPM模式*/
+                /*如果是OneMore模式*/
                 sqlscript = BP.Sys.SystemConfig.CCFlowAppPath + "\\GPM\\SQLScript\\Port_Inc_CH_BPM.sql";
                 BP.DA.DBAccess.RunSQLScript(sqlscript);
             }
@@ -3101,7 +3106,7 @@ namespace BP.WF
         /// <returns></returns>
         public static string GenerUserImgSmallerHtml(string userNo, string userName)
         {
-            return "<img src='" + CCFlowAppPath + "DataUser/UserICON/" + userNo + "Smaller.png' border=0 width='15px' height='15px' style='padding-right:5px;vertical-align:middle;'  onerror=\"src='" + CCFlowAppPath + "DataUser/UserICON/DefaultSmaller.png'\" />" + userName;
+            return "<img src='" + CCFlowAppPath + "DataUser/UserICON/" + userNo + "Smaller.png' border=0  style='height:15px;width:15px;padding-right:5px;vertical-align:middle;'  onerror=\"src='" + CCFlowAppPath + "DataUser/UserICON/DefaultSmaller.png'\" />" + userName;
         }
         /// <summary>
         /// 产生用户大图片
@@ -3163,6 +3168,22 @@ namespace BP.WF
             }
         }
         /// <summary>
+        /// 微信是否启用
+        /// </summary>
+        public static bool IsEnable_WeiXin
+        {
+            get
+            {
+                //如果两个参数都不为空说明启用
+                string corpid = BP.Sys.SystemConfig.WX_CorpID;
+                string corpsecret = BP.Sys.SystemConfig.WX_AppSecret;
+                if (string.IsNullOrEmpty(corpid) || string.IsNullOrEmpty(corpsecret))
+                    return false;
+
+                return true;
+            }
+        }
+        /// <summary>
         /// 钉钉是否启用
         /// </summary>
         public static bool IsEnable_DingDing
@@ -3170,10 +3191,9 @@ namespace BP.WF
             get
             {
                 //如果两个参数都不为空说明启用
-                string corpid = BP.Sys.SystemConfig.GetValByKey("Ding_CorpID", "");
-                string corpsecret = BP.Sys.SystemConfig.GetValByKey("Ding_CorpSecret", "");
-                if (string.IsNullOrEmpty(corpid) || string.IsNullOrEmpty(corpsecret) 
-                    || string.IsNullOrWhiteSpace(corpid) || string.IsNullOrWhiteSpace(corpsecret))
+                string corpid = BP.Sys.SystemConfig.Ding_CorpID;
+                string corpsecret = BP.Sys.SystemConfig.Ding_CorpSecret;
+                if (string.IsNullOrEmpty(corpid) || string.IsNullOrEmpty(corpsecret))
                     return false;
 
                 return true;
@@ -3604,8 +3624,10 @@ namespace BP.WF
                         ps.SQL = "SELECT TOP 1 RDT,SDT FROM WF_GENERWORKERLIST  WHERE WorkID=" + dbstr + "WorkID AND FK_Emp=" + dbstr + "FK_Emp AND FK_Node=" + dbstr + "FK_Node ORDER BY RDT DESC";
                         break;
                     case DBType.Oracle:
-                    case DBType.MySQL:
                         ps.SQL = "SELECT  RDT,SDT FROM WF_GENERWORKERLIST  WHERE WorkID=" + dbstr + "WorkID AND FK_Emp=" + dbstr + "FK_Emp AND FK_Node=" + dbstr + "FK_Node AND ROWNUM=1 ORDER BY RDT DESC ";
+                        break;
+                    case DBType.MySQL:
+                        ps.SQL = "SELECT  RDT,SDT FROM WF_GENERWORKERLIST  WHERE WorkID=" + dbstr + "WorkID AND FK_Emp=" + dbstr + "FK_Emp AND FK_Node=" + dbstr + "FK_Node ORDER BY RDT DESC limit 0,1 ";
                         break;
                     default:
                         break;
@@ -3890,6 +3912,54 @@ namespace BP.WF
 
         #region 其他方法。
         /// <summary>
+        /// 获得一个表单的动态权限字段
+        /// </summary>
+        /// <param name="exts"></param>
+        /// <param name="nd"></param>
+        /// <param name="en"></param>
+        /// <param name="md"></param>
+        /// <param name="attrs"></param>
+        /// <returns></returns>
+        public static string GenerActiveFiels(MapExts exts, Node nd, Entity en, MapData md, MapAttrs attrs)
+        {
+            string strs = "";
+            foreach (MapExt me in exts)
+            {
+                if (me.ExtType != MapExtXmlList.SepcFiledsSepcUsers)
+                    continue;
+                bool isCando = false;
+                if (me.Tag1 != "")
+                {
+                    string tag1 = me.Tag1 + ",";
+                    if (tag1.Contains(BP.Web.WebUser.No + ","))
+                    {
+                        //根据设置的人员计算.
+                        isCando = true;
+                    }
+                }
+
+                if (me.Tag2 != "")
+                {
+                    //根据sql判断.
+                    string sql = me.Tag2.Clone() as string;
+                    sql = BP.WF.Glo.DealExp(sql, en, null);
+                    if (BP.DA.DBAccess.RunSQLReturnValFloat(sql) > 0)
+                        isCando = true;
+                }
+
+                if (me.Tag3 != "" && BP.Web.WebUser.FK_Dept == me.Tag3)
+                {
+                    //根据部门编号判断.
+                    isCando = true;
+                }
+
+                if (isCando == false)
+                    continue;
+                strs += me.Doc;
+            }
+            return strs;
+        }
+        /// <summary>
         /// 转到消息显示界面.
         /// </summary>
         /// <param name="info"></param>
@@ -4145,6 +4215,7 @@ namespace BP.WF
             return true;
         }
         #endregion 其他方法。
+
 
         
     }
