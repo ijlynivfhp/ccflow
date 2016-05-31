@@ -235,6 +235,7 @@ namespace CCFlow.WF.Admin
             Pub2.Add("<iframe id='src1' frameborder='0' src='' style='width:100%;height:100%' scrolling='auto'></iframe>");
             Pub2.Add("</div>" + Environment.NewLine);
 
+            /*  该模块jflow暂时不翻译，注释掉 by fanleiwei 20160531
             if (myEnentXml.IsHaveMsg == true)
             {
                 HaveMsg = true;
@@ -246,7 +247,7 @@ namespace CCFlow.WF.Admin
                 Pub2.Add("<iframe id='src3' frameborder='0' src='' style='width:100%;height:100%' scrolling='auto'></iframe>");
                 Pub2.Add("</div>" + Environment.NewLine);
             }
-
+            */
             Pub2.Add("</div>");
         }
     }
