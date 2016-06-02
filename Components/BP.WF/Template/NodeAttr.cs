@@ -63,14 +63,20 @@ namespace BP.WF.Template
         public const string HisDeptStrs = "HisDeptStrs";
         public const string HisEmps = "HisEmps";
         public const string GroupStaNDs = "GroupStaNDs";
-        public const string FJOpen11 = "FJOpen";
-        public const string IsCanReturn = "IsCanReturn";
         public const string IsHandOver = "IsHandOver";
         public const string IsCanDelFlow = "IsCanDelFlow";
         /// <summary>
         /// 是否可以原路返回
         /// </summary>
         public const string IsBackTracking = "IsBackTracking";
+        /// <summary>
+        /// 退回原因(多个原因使用@符号分开.)
+        /// </summary>
+        public const string ReturnReasonsItems = "ReturnReasonsItems";
+        /// <summary>
+        /// 退回提示
+        /// </summary>
+        public const string ReturnAlert = "ReturnAlert";
         /// <summary>
         /// 是否启用投递路径自动记忆功能?
         /// </summary>
@@ -257,6 +263,14 @@ namespace BP.WF.Template
         /// </summary>
         public const string IsAllowRepeatEmps = "IsAllowRepeatEmps";
         /// <summary>
+        /// 是否启动自动运行？
+        /// </summary>
+        public const string AutoRunEnable = "AutoRunEnable";
+        /// <summary>
+        /// 自动运行参数
+        /// </summary>
+        public const string AutoRunParas = "AutoRunParas";
+        /// <summary>
         /// 属性
         /// </summary>
         public const string FrmAttr = "FrmAttr";
@@ -357,6 +371,10 @@ namespace BP.WF.Template
         /// icon头像
         /// </summary>
         public const string ICON = "ICON";
+        /// <summary>
+        /// 自定义参数字段
+        /// </summary>
+        public const string SelfParas = "SelfParas";
         #endregion
 
         #region 父子流程

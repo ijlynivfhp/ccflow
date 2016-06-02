@@ -139,6 +139,7 @@
     <Content Include="WF\Admin\AttrNode\NodeRunModel.aspx" />
     <Content Include="WF\Admin\AttrNode\PushMessage.aspx" />
     <Content Include="WF\Admin\AttrNode\PushMessageEntity.aspx" />
+    <Content Include="WF\Admin\AttrNode\ReturnRole.aspx" />
     <Content Include="WF\Admin\AttrNode\SDKComponents.aspx" />
     <Content Include="WF\Admin\AttrNode\SepcFiledsSepcUsers.aspx" />
     <Content Include="WF\Admin\AttrNode\SepcFiledsSepcUsersDtl.aspx" />
@@ -1405,6 +1406,7 @@
     <Content Include="WF\MapDef\SFSQL.aspx" />
     <Content Include="WF\MapDef\EditSQL.aspx" />
     <Content Include="WF\MapDef\SFWS.aspx" />
+    <Content Include="WF\MapDef\SlnCopy.aspx" />
     <Content Include="WF\Messages.aspx" />
     <Content Include="WF\MessagesReplay.aspx" />
     <Content Include="WF\OneFlow\Archive.aspx" />
@@ -1858,6 +1860,8 @@
     <Content Include="WF\Img\Action\AskforHelp.png" />
     <Content Include="WF\Img\Action\Skip.png" />
     <Content Include="WF\Img\Action\ForwardAskfor.png" />
+    <Content Include="WF\SDKComponents\TrackChart.ascx" />
+    <Content Include="WF\SDKComponents\TrackList.ascx" />
     <Content Include="WF\SDKComponents\TruakOnly.ascx" />
     <Content Include="WF\Start.aspx" />
     <Content Include="WF\MapDef\BatchEdit.aspx" />
@@ -3738,6 +3742,13 @@
     <Compile Include="WF\Admin\AttrNode\PushMessageEntity.aspx.designer.cs">
       <DependentUpon>PushMessageEntity.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WF\Admin\AttrNode\ReturnRole.aspx.cs">
+      <DependentUpon>ReturnRole.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\Admin\AttrNode\ReturnRole.aspx.designer.cs">
+      <DependentUpon>ReturnRole.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WF\Admin\AttrNode\SDKComponents.aspx.cs">
       <DependentUpon>SDKComponents.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5199,6 +5210,13 @@
     <Compile Include="WF\MapDef\SFWS.aspx.designer.cs">
       <DependentUpon>SFWS.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WF\MapDef\SlnCopy.aspx.cs">
+      <DependentUpon>SlnCopy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\MapDef\SlnCopy.aspx.designer.cs">
+      <DependentUpon>SlnCopy.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WF\Messages.aspx.cs">
       <DependentUpon>Messages.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5853,6 +5871,20 @@
     </Compile>
     <Compile Include="WF\FlowSearch.aspx.designer.cs">
       <DependentUpon>FlowSearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WF\SDKComponents\TrackChart.ascx.cs">
+      <DependentUpon>TrackChart.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\SDKComponents\TrackChart.ascx.designer.cs">
+      <DependentUpon>TrackChart.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WF\SDKComponents\TrackList.ascx.cs">
+      <DependentUpon>TrackList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\SDKComponents\TrackList.ascx.designer.cs">
+      <DependentUpon>TrackList.ascx</DependentUpon>
     </Compile>
     <Compile Include="WF\SDKComponents\TruakOnly.ascx.cs">
       <DependentUpon>TruakOnly.ascx</DependentUpon>
@@ -7886,7 +7918,6 @@
     <Folder Include="Bin\" />
     <Folder Include="DataUser\OrgData\" />
     <Folder Include="DataUser\TempleteExpEns\" />
-    <Folder Include="WF\Admin\App\" />
     <Folder Include="WF\Admin\CCFormDesigner\lib\sets\" />
     <Folder Include="WF\Admin\ClientBin\NodeIcon\" />
     <Folder Include="WF\App\Classic\Img\Menu\" />
@@ -7931,7 +7962,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>5853</DevelopmentServerPort>
+          <DevelopmentServerPort>8158</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

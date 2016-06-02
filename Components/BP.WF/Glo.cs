@@ -719,6 +719,19 @@ namespace BP.WF
         /// </summary>
         public static void DoInstallDataBase(string lang, bool isInstallFlowDemo,bool isInstallCCIM)
         {
+
+            #region 检查是否是空白的数据库。
+            //if (BP.DA.DBAccess.IsExitsObject("WF_Emp")
+            //     || BP.DA.DBAccess.IsExitsObject("WF_Flow")
+            //     || BP.DA.DBAccess.IsExitsObject("Port_Emp")
+            //    || BP.DA.DBAccess.IsExitsObject("CN_City"))
+            //{
+            //    throw new Exception("@当前的数据库好像是一个安装执行失败的数据库，里面包含了一些cc的表，所以您需要删除这个数据库然后执行重新安装。");
+            //}
+            #endregion 检查是否是空白的数据库。
+
+
+
             ArrayList al = null;
             string info = "BP.En.Entity";
             al = BP.En.ClassFactory.GetObjects(info);
@@ -1015,21 +1028,6 @@ namespace BP.WF
             //    nd.HisWork.CheckPhysicsTable();
             #endregion 执行补充的sql, 让外键的字段长度都设置成100.
 
-            #region 安装ccim.
-            Glo.DoInstallCCIM();
-            #endregion
-
-        }
-        /// <summary>
-        /// 安装CCIM
-        /// </summary>
-        /// <param name="lang"></param>
-        /// <param name="yunXingHuanjing"></param>
-        /// <param name="isDemo"></param>
-        public static void DoInstallCCIM()
-        {
-          //  string sqlscript = SystemConfig.PathOfWebApp + "\\WF\\Data\\Install\\SQLScript\\CCIM_" + BP.Sys.SystemConfig.AppCenterDBType + ".sql";
-           // BP.DA.DBAccess.RunSQLScriptGo(sqlscript);
         }
         public static void KillProcess(string processName) //杀掉进程的方法
         {
@@ -4213,6 +4211,36 @@ namespace BP.WF
                     return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// 复制表单权限-从一个节点到另一个节点.
+        /// </summary>
+        /// <param name="fk_flow">流程编号</param>
+        /// <param name="frmID">表单ID</param>
+        /// <param name="currNodeID">当前节点</param>
+        /// <param name="fromNodeID">从节点</param>
+        public static void CopyFrmSlnFromNodeToNode(string fk_flow, string frmID, int currNodeID, int fromNodeID)
+        {
+            #region 处理字段.
+            //删除现有的.
+            FrmFields frms = new FrmFields();
+            frms.Delete(FrmFieldAttr.FK_Node, currNodeID, FrmFieldAttr.FK_MapData, frmID);
+
+            //查询出来,指定的权限方案.
+            frms.Retrieve(FrmFieldAttr.FK_Node, fromNodeID, FrmFieldAttr.FK_MapData, frmID);
+
+            //开始复制.
+            foreach (FrmField item in frms)
+            {
+                item.MyPK = frmID + "_" + fk_flow + "_" + currNodeID + "_" + item.KeyOfEn;
+                item.FK_Node = currNodeID;
+                item.Insert(); // 插入数据库.
+            }
+            #endregion 处理字段.
+
+
+
         }
         #endregion 其他方法。
 

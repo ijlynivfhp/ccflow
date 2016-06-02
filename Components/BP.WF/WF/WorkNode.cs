@@ -651,8 +651,37 @@ namespace BP.WF
                 //判断下一个节点是否是外部用户处理人节点？
                 if (town.HisNode.IsGuestNode)
                 {
-                    wl.GuestNo = this.HisGenerWorkFlow.GuestNo;
-                    wl.GuestName = this.HisGenerWorkFlow.GuestName;
+                    if (this.HisGenerWorkFlow.GuestNo != "")
+                    {
+                        wl.GuestNo = this.HisGenerWorkFlow.GuestNo;
+                        wl.GuestName = this.HisGenerWorkFlow.GuestName;
+                    }
+                    else
+                    {
+                        /*这种情况是，不是外部用户发起的流程。*/
+                        if (town.HisNode.HisDeliveryWay == DeliveryWay.BySQL)
+                        {
+                            string mysql = town.HisNode.DeliveryParas.Clone() as string;
+                            DataTable mydt = BP.DA.DBAccess.RunSQLReturnTable(Glo.DealExp(mysql, this.rptGe, null));
+
+                            wl.GuestNo = mydt.Rows[0][0].ToString();
+                            wl.GuestName = mydt.Rows[0][1].ToString();
+
+                            this.HisGenerWorkFlow.GuestNo = wl.GuestNo;
+                            this.HisGenerWorkFlow.GuestName = wl.GuestName;
+                        }
+                        else if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousNodeFormEmpsField)
+                        {
+                            wl.GuestNo = this.HisWork.GetValStrByKey(town.HisNode.DeliveryParas);
+                            wl.GuestName = "外部用户";
+                            this.HisGenerWorkFlow.GuestNo = wl.GuestNo;
+                            this.HisGenerWorkFlow.GuestName = wl.GuestName;
+                        }
+                        else
+                        {
+                            throw new Exception("@当前节点["+this.town.HisNode.Name+"]是中间节点，并且是外部用户处理节点，您需要正确的设置，这个外部用户接受人规则。");
+                        }
+                    }
 
                     //wl.FK_Emp = wl.GuestNo;
                     //wl.GuestName = wl.GuestName;
@@ -5578,6 +5607,9 @@ namespace BP.WF
             // 检查FormTree必填项目,如果有一些项目没有填写就抛出异常.
             this.CheckFrmIsNotNull();
 
+            // 处理自动运行 - 预先设置未来的运行节点.
+            this.DealAutoRunEnable();
+
             //把数据更新到数据库里.
             this.HisWork.DirectUpdate();
             if (this.HisWork.EnMap.PhysicsTable != this.rptGe.EnMap.PhysicsTable)
@@ -7200,6 +7232,49 @@ namespace BP.WF
             this.HisGenerWorkFlow.Emps = emps;
         }
         /// <summary>
+        /// 处理自动运行 - 预先设置未来的运行节点.
+        /// </summary>
+        private void DealAutoRunEnable()
+        {
+               //检查当前节点是否是自动运行的.
+            if (this.HisNode.AutoRunEnable==false)
+                return;
+
+                /*如果是自动运行就要设置自动运行参数.*/
+                string exp = this.HisNode.AutoRunParas.Clone() as string;
+                if (exp == null  || exp=="")
+                    throw new Exception("@您设置当前是自动运行，但是没有在该节点上设置参数。");
+
+                exp = exp.Replace("@OID",this.WorkID.ToString());
+                exp = exp.Replace("@WorkID",this.WorkID.ToString());
+
+                exp = exp.Replace("@NodeID", this.HisNode.NodeID.ToString());
+                exp = exp.Replace("@FK_Node", this.HisNode.NodeID.ToString());
+
+                exp = exp.Replace("@WebUser.No", BP.Web.WebUser.No);
+                exp = exp.Replace("@WebUser.Name", BP.Web.WebUser.Name);
+                exp = exp.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+                exp = exp.Replace("@WebUser.FK_DeptName", BP.Web.WebUser.FK_DeptName);
+
+            if (exp.Contains("@")==true)
+                exp = Glo.DealExp(exp, this.HisWork, null);
+
+            if (exp.Contains("@") == true)
+                throw new Exception("@您配置的表达式没有没被完全的解析下来"+exp);
+
+            //没有查询到就不设置了.
+            string strs = DBAccess.RunSQLReturnStringIsNull(exp, null);
+            if (strs == null)
+                return ;
+
+            //把约定的参数写入到引擎
+            Dev2Interface.Flow_SetFlowTransferCustom(this.HisFlow.No, this.WorkID,
+                BP.WF.TransferCustomType.ByWorkerSet,strs);
+
+            //重新执行查询.
+            this.HisGenerWorkFlow.RetrieveFromDBSources();
+        }
+        /// <summary>
         /// 检查流程、节点的完成条件
         /// </summary>
         /// <returns></returns>
@@ -7278,7 +7353,6 @@ namespace BP.WF
         }
 
         #region 启动多个节点
-
         /// <summary>
         /// 生成为什么发送给他们
         /// </summary>

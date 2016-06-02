@@ -325,6 +325,8 @@ namespace BP.WF.Template
                 map.SetHelperUrl(NodeAttr.SaveModel, "http://ccbpm.mydoc.io/?v=5404&t=17934");
 
                 map.AddBoolean(NodeAttr.IsGuestNode, false, "是否是外部用户执行的节点(非组织结构人员参与处理工作的节点)?", true, true, true);
+
+                map.AddTBString(NodeAttr.SelfParas, null, "自定义参数", true, false, 0, 500, 10, true);
                 #endregion  基础属性
                  
                 #region 分合流子线程属性
@@ -365,7 +367,10 @@ namespace BP.WF.Template
                 //map.SetHelperUrl(NodeAttr.BlockAlert, "http://ccbpm.mydoc.io/?v=5404&t=17948");
 
 
-                map.AddBoolean(NodeAttr.IsAllowRepeatEmps, false, "是否允许子线程接受人员重复(仅当分流点向子线程发送时有效)?", true, true, true);
+                map.AddBoolean(NodeAttr.IsAllowRepeatEmps, false, "是否允许子线程接受人员重复(仅当分流点向子线程发送时有效)?", true, true, false);
+
+                map.AddBoolean(NodeAttr.AutoRunEnable, false, "是否启用自动运行？(仅当分流点向子线程发送时有效)", true, true, true);
+                map.AddTBString(NodeAttr.AutoRunParas, null, "自动运行SQL", true, false, 0, 100, 10, true);
 
                 #endregion 分合流子线程属性
 
@@ -413,9 +418,16 @@ namespace BP.WF.Template
               //  map.AddTBString(NodeAttr.ReturnToNodes, null, "可退回节点", true, false, 0, 200, 10, true);
                 map.SetHelperUrl(NodeAttr.ReturnRole, "http://ccbpm.mydoc.io/?v=5404&t=16255"); //增加帮助.
 
+                map.AddTBString(NodeAttr.ReturnAlert, null, "被退回后信息提示", true, false, 0, 999, 10, true);
+
+
                 map.AddBoolean(NodeAttr.IsBackTracking, false, "是否可以原路返回(启用退回功能才有效)", true, true, false);
                 map.AddTBString(BtnAttr.ReturnField, "", "退回信息填写字段", true, false, 0, 50, 10);
                 map.SetHelperUrl(NodeAttr.IsBackTracking, "http://ccbpm.mydoc.io/?v=5404&t=16255"); //增加帮助.
+
+                map.AddTBString(NodeAttr.ReturnReasonsItems, null, "退回原因", true, false, 0, 999, 10, true);
+                
+
 
                 map.AddTBString(BtnAttr.CCLab, "抄送", "抄送按钮标签", true, false, 0, 50, 10);
                 map.AddDDLSysEnum(NodeAttr.CCRole, 0, "抄送规则", true, true, NodeAttr.CCRole,
@@ -425,7 +437,7 @@ namespace BP.WF.Template
                 // add 2014-04-05.
                 map.AddDDLSysEnum(NodeAttr.CCWriteTo, 0, "抄送写入规则",
              true, true, NodeAttr.CCWriteTo, "@0=写入抄送列表@1=写入待办@2=写入待办与抄送列表", true);
-                map.SetHelperUrl(NodeAttr.CCWriteTo, "http://ccbpm.mydoc.io/?v=5404&t=17976"); //增加帮助
+                map.SetHelperUrl(NodeAttr.CCWriteTo, "http://ccbpm.mydoc.io/?v=5404&t=17976"); //增加帮助.
 
                 map.AddTBString(BtnAttr.ShiftLab, "移交", "移交按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.ShiftEnable, false, "是否启用", true, true);
@@ -706,11 +718,10 @@ namespace BP.WF.Template
                 rm = new RefMethod();
                 rm.Title = "节点消息"; // "调用事件接口";
                 rm.ClassMethodName = this.ToString() + ".DoMessage";
-                rm.Icon = BP.WF.Glo.CCFlowAppPath + "WF/Img/Event.png";
+                rm.Icon = BP.WF.Glo.CCFlowAppPath + "WF/Img/Message24.png";
                 rm.RefMethodType = RefMethodType.RightFrameOpen;
                 map.AddRefMethod(rm);
 
-             
 
                 rm = new RefMethod();
                 rm.Title = "父子流程";
