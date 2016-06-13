@@ -3270,7 +3270,6 @@ namespace BP.WF
             ps.Add("OID", workID);
             BP.DA.DBAccess.RunSQL(ps);
         }
-
         /// <summary>
         /// 设置父流程信息 
         /// </summary>
@@ -3284,7 +3283,7 @@ namespace BP.WF
             int parentNodeID, string parentEmpNo)
         {
             if (parentWorkID == 0)
-                throw new Exception("@设置的父流程的流程编号为0，这是非法的。");
+                throw new Exception("@设置的父流程的流程编号为 0 ，这是非法的。");
 
             if (string.IsNullOrEmpty(parentEmpNo))
                 parentEmpNo = WebUser.No;
@@ -3300,6 +3299,7 @@ namespace BP.WF
 
             BP.DA.DBAccess.RunSQL(ps);
 
+
             Flow fl = new Flow(subFlowNo);
             ps = new Paras();
             ps.SQL = "UPDATE " + fl.PTable + " SET PFlowNo=" + dbstr + "PFlowNo, PWorkID=" + dbstr + "PWorkID,PNodeID=" + dbstr + "PNodeID, PEmp=" + dbstr + "PEmp WHERE OID=" + dbstr + "OID";
@@ -3307,8 +3307,8 @@ namespace BP.WF
             ps.Add(NDXRptBaseAttr.PWorkID, parentWorkID);
             ps.Add(NDXRptBaseAttr.PNodeID, parentNodeID);
             ps.Add(NDXRptBaseAttr.PEmp, parentEmpNo);
-
             ps.Add(NDXRptBaseAttr.OID, subFlowWorkID);
+
             BP.DA.DBAccess.RunSQL(ps);
         }
 

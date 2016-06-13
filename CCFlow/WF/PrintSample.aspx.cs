@@ -508,8 +508,8 @@ namespace CCFlow.WF
                 {
                     case StartGuideWay.None:
                         break;
-                    case StartGuideWay.BySystemUrlMulti:
-                    case StartGuideWay.BySystemUrlMultiEntity:
+                    case StartGuideWay.SubFlowGuide:
+                    case StartGuideWay.SubFlowGuideEntity:
                         this.Response.Redirect("StartGuide.aspx?FK_Flow=" + this.currFlow.No, true);
                         break;
                     case StartGuideWay.ByHistoryUrl: // 历史数据.
@@ -1774,7 +1774,7 @@ namespace CCFlow.WF
             try
             {
                 //处理通用的发送成功后的业务逻辑方法，此方法可能会抛出异常.
-                BP.WF.Glo.DealBuinessAfterSendWork(this.FK_Flow, this.WorkID, this.DoFunc, WorkIDs, this.CFlowNo, 0, null);
+                BP.WF.Glo.DealBuinessAfterSendWork(this.FK_Flow, this.WorkID, this.DoFunc, WorkIDs);
             }
             catch (Exception ex)
             {
