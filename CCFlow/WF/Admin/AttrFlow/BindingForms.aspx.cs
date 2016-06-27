@@ -158,7 +158,7 @@ namespace CCFlow.WF.Admin.AttrFlow
 
             Button btn = new Button();
             btn.ID = "Save";
-            btn.Text = "保存设置";
+            btn.Text = "保存";
             btn.CssClass = "Btn";
             btn.Click += new EventHandler(btn_SavePowerOrders_Click);
 
@@ -189,7 +189,7 @@ namespace CCFlow.WF.Admin.AttrFlow
 
                 fn = new FrmNode();
 
-                fn.IsEdit = this.Pub1.GetCBByID("CB_IsEdit_" + nd.NodeID.ToString()).Checked;
+            //    fn.IsEdit = this.Pub1.GetCBByID("CB_IsEdit_" + nd.NodeID.ToString()).Checked;
                 fn.IsPrint = this.Pub1.GetCBByID("CB_IsPrint_" + nd.NodeID.ToString()).Checked;
 
                 //是否启

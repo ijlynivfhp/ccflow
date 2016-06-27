@@ -11,6 +11,12 @@
     <script src="../../Scripts/CommonUnite.js" type="text/javascript"></script>
     <script src="../../Comm/JScript.js" type="text/javascript"></script>
     <script src="../../Scripts/CommonUnite.js" type="text/javascript"></script>
+
+    <style type="text/css">
+    .icon-reddot{
+	 background:url('../../Img/OK.png') no-repeat center center;
+     }
+     </style>
     <script language="javascript" type="text/javascript">
         $(function () {
             //绑定树单击事件
@@ -88,7 +94,7 @@
                 
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_1").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
 
             }
@@ -96,7 +102,7 @@
                 onclickSJ(2);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_2").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
 
             }
@@ -104,14 +110,14 @@
                 onclickSJ(3);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_3").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_ByDeptAndStation.ClientID%>").checked) {
                 onclickSJ(4);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_4").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_ByStationAndEmpDept.ClientID%>").checked) {
@@ -125,91 +131,91 @@
                 onclickSJ(6);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_6").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_ByStationOnly.ClientID%>").checked) {
                 onclickSJ(7);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_7").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_ByStarter.ClientID%>").checked) {
                 onclickSJ(8);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_8").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_ByPreviousNodeEmp.ClientID%>").checked) {
                 onclickSJ(9);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_9").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_BySpecNodeEmp.ClientID%>").checked) {
                 onclickSJ(10);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_10").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_BySQL.ClientID%>").checked) {
                 onclickSJ(11);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_11").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_BySQLAsSubThreadEmpsAndData.ClientID%>").checked) {
                 onclickSJ(12);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_12").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_BySelected.ClientID%>").checked) {
                 onclickSJ(13);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_13").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_ByPreviousNodeFormEmpsField.ClientID%>").checked) {
                 onclickSJ(14);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_14").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_ByDtlAsSubThreadEmps.ClientID%>").checked) {
                 onclickSJ(15);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_15").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_ByFEE.ClientID%>").checked) {
                 onclickSJ(16);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_16").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_BySetDeptAsSubthread.ClientID%>").checked) {
                 onclickSJ(17);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_17").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
             if (document.getElementById("<%=RB_ByCCFlowBPM.ClientID%>").checked) {
                 onclickSJ(18);
                 $('#tt').tree('update', {
                     target: $('#tt').tree('find', "node_18").target,
-                    iconCls: 'icon-right'
+                    iconCls: 'icon-reddot'
                 });
             }
 
@@ -530,7 +536,7 @@
                                         <asp:RadioButton ID="RB_ByDept" Text="按节点绑定的部门计算" GroupName="xxx" runat="server" />
                                     </div>
                                     <div style="float: right">
-                                        <a href="javascript:WinOpen('/WF/Comm/RefFunc/Dot2DotSingle.aspx?EnsName=BP.WF.Template.Selectors&EnName=BP.WF.Template.Selector&AttrKey=BP.WF.Template.NodeDepts&NodeID=<%=nd.NodeID %>&r=<%=k %>&ShowWay=StaGrade')">
+                                        <a href="javascript:WinOpen('/WF/Comm/RefFunc/Dot2DotSingle.aspx?EnsName=BP.WF.Template.Selectors&EnName=BP.WF.Template.Selector&AttrKey=BP.WF.Template.NodeDepts&NodeID=<%=nd.NodeID %>&r=<%=k %>&ShowWay=FK_StationType')">
                                             设置/更改部门(<%=ndepts.Count %>)</a></div>
                                 </th>
                             </tr>
@@ -548,7 +554,7 @@
                                         <asp:RadioButton ID="RB_ByBindEmp" Text="按节点绑定的人员计算" GroupName="xxx" runat="server" />
                                     </div>
                                     <div style="float: right">
-                                        <a href="javascript:WinOpen('/WF/Comm/RefFunc/Dot2DotSingle.aspx?EnsName=BP.WF.Template.Selectors&EnName=BP.WF.Template.Selector&AttrKey=BP.WF.Template.NodeEmps&NodeID=<%=nd.NodeID %>&r=<%=k %>&ShowWay=StaGrade')">
+                                        <a href="javascript:WinOpen('/WF/Comm/RefFunc/Dot2DotSingle.aspx?EnsName=BP.WF.Template.Selectors&EnName=BP.WF.Template.Selector&AttrKey=BP.WF.Template.NodeEmps&NodeID=<%=nd.NodeID %>&r=<%=k %>&ShowWay=FK_StationType')">
                                             设置/更改处理人(<%=nEmps.Count %>)</a></div>
                                 </th>
                             </tr>
@@ -567,7 +573,7 @@
                                     </div>
                                     <div style="float: right">
                                         <a href="javascript:WinOpen('/WF/Comm/RefFunc/Dot2DotSingle.aspx?EnsName=BP.WF.Template.Selectors&EnName=BP.WF.Template.Selector&AttrKey=BP.WF.Template.NodeStations&NodeID=<%=nd.NodeID %>&r=<%=k %>&ShowWay=None')">
-                                            设置与更改岗位(<%=nss.Count%>)</a> |<a href="javascript:WinOpen('/WF/Comm/RefFunc/Dot2DotSingle.aspx?EnsName=BP.WF.Template.Selectors&EnName=BP.WF.Template.Selector&AttrKey=BP.WF.Template.NodeDepts&NodeID=<%=nd.NodeID %>&r=1005101248&ShowWay=StaGrade')">
+                                            设置与更改岗位(<%=nss.Count%>)</a> |<a href="javascript:WinOpen('/WF/Comm/RefFunc/Dot2DotSingle.aspx?EnsName=BP.WF.Template.Selectors&EnName=BP.WF.Template.Selector&AttrKey=BP.WF.Template.NodeDepts&NodeID=<%=nd.NodeID %>&r=1005101248&ShowWay=FK_StationType')">
                                                 设置与更改部门(<%=ndepts.Count%>)</a>
                                     </div>
                                 </th>
@@ -587,7 +593,7 @@
                                     </div>
                                     <div style="float: right">
                                         <a href="javascript:WinOpen('/WF/Comm/RefFunc/Dot2DotSingle.aspx?EnsName=BP.WF.Template.Selectors&EnName=BP.WF.Template.Selector&AttrKey=BP.WF.Template.NodeStations&NodeID=<%=nd.NodeID %>&r=<%=k %>&ShowWay=None')">
-                                            设置与更改岗位(<%=nss.Count %>)</a> |<a href="javascript:WinOpen('/WF/Comm/RefFunc/Dot2DotSingle.aspx?EnsName=BP.WF.Template.Selectors&EnName=BP.WF.Template.Selector&AttrKey=BP.WF.Template.NodeDepts&NodeID=<%=nd.NodeID %>&r=<%=k %>&ShowWay=StaGrade')">
+                                            设置与更改岗位(<%=nss.Count %>)</a> |<a href="javascript:WinOpen('/WF/Comm/RefFunc/Dot2DotSingle.aspx?EnsName=BP.WF.Template.Selectors&EnName=BP.WF.Template.Selector&AttrKey=BP.WF.Template.NodeDepts&NodeID=<%=nd.NodeID %>&r=<%=k %>&ShowWay=FK_StationType')">
                                                 设置与更改部门(<%=ndepts.Count %>)</a>
                                     </div>
                                 </th>
@@ -829,7 +835,7 @@
                                     </div>
                                     <div style="float: right">
                                        
-                                         <a href="javascript:WinOpen('/WF/Comm/RefFunc/Dot2DotSingle.aspx?EnsName=BP.WF.Template.Selectors&EnName=BP.WF.Template.Selector&AttrKey=BP.WF.Template.NodeDepts&NodeID=<%=nd.NodeID %>&r=<%=k %>&ShowWay=StaGrade')">
+                                         <a href="javascript:WinOpen('/WF/Comm/RefFunc/Dot2DotSingle.aspx?EnsName=BP.WF.Template.Selectors&EnName=BP.WF.Template.Selector&AttrKey=BP.WF.Template.NodeDepts&NodeID=<%=nd.NodeID %>&r=<%=k %>&ShowWay=FK_StationType')">
                                                 设置与更改部门(<%=ndepts.Count %>)</a>
                                     </div>
                                 </th>

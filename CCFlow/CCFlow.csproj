@@ -40,56 +40,56 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FtpSupport">
-      <HintPath>..\DLL\FtpSupport.dll</HintPath>
+      <HintPath>..\RefDLL\FtpSupport.dll</HintPath>
     </Reference>
     <Reference Include="FusionCharts">
-      <HintPath>..\DLL\FusionCharts.dll</HintPath>
+      <HintPath>..\RefDLL\FusionCharts.dll</HintPath>
     </Reference>
     <Reference Include="IBM.Data.Informix">
-      <HintPath>..\DLL\IBM.Data.Informix.dll</HintPath>
+      <HintPath>..\RefDLL\IBM.Data.Informix.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\DLL\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\RefDLL\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Expression.Interactions">
-      <HintPath>..\DLL\Microsoft.Expression.Interactions.dll</HintPath>
+      <HintPath>..\RefDLL\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.JScript" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\DLL\Office12\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <HintPath>..\RefDLL\Office12\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\DLL\Office12\Microsoft.Office.Interop.Word.dll</HintPath>
+      <HintPath>..\RefDLL\Office12\Microsoft.Office.Interop.Word.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Vbe.Interop, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\DLL\Office12\Microsoft.Vbe.Interop.dll</HintPath>
+      <HintPath>..\RefDLL\Office12\Microsoft.Vbe.Interop.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.UI.WebControls, Version=1.0.2.226, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DLL\Microsoft.Web.UI.WebControls.dll</HintPath>
+      <HintPath>..\RefDLL\Microsoft.Web.UI.WebControls.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data">
-      <HintPath>..\DLL\MySql.Data.dll</HintPath>
+      <HintPath>..\RefDLL\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DLL\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\RefDLL\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\DLL\Office12\Office.dll</HintPath>
+      <HintPath>..\RefDLL\Office12\Office.dll</HintPath>
     </Reference>
     <Reference Include="Silverlight.DataSetConnector, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DLL\Silverlight.DataSetConnector.dll</HintPath>
+      <HintPath>..\RefDLL\Silverlight.DataSetConnector.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.DirectoryServices" />
@@ -115,7 +115,6 @@
     <Content Include="clientaccesspolicy.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="GPM\Loginin.aspx" />
     <Content Include="SDKFlowDemo\GuestApp\Home.aspx" />
     <Content Include="SDKFlowDemo\GuestApp\Login.aspx" />
     <Content Include="SDKFlowDemo\GuestApp\Runing.aspx" />
@@ -131,7 +130,6 @@
       <LastGenOutput>Reference1.cs</LastGenOutput>
     </Content>
     <Content Include="Service References\CloundWS\WS.disco" />
-    <Content Include="Silverlight.js" />
     <Content Include="WF\Activex\GDCASign\readme.txt" />
     <Content Include="WF\Admin\AttrFlow\Limit.aspx" />
     <Content Include="WF\Admin\AttrNode\BlockModel.aspx" />
@@ -145,6 +143,7 @@
     <Content Include="WF\Admin\AttrNode\SepcFiledsSepcUsersDtl.aspx" />
     <Content Include="WF\Admin\AttrNode\TurnToDeal.aspx" />
     <Content Include="WF\Admin\CCFormDesigner\FrmAttr.aspx" />
+    <Content Include="WF\Admin\CCFormDesigner\Img\CC.png" />
     <Content Include="WF\Admin\CCFormDesigner\NewFrmGuideNew.aspx" />
     <Content Include="WF\Admin\CCFormDesigner\NewFrmGuidEntity.aspx" />
     <Content Include="crossdomain.xml">
@@ -160,152 +159,6 @@
     <Content Include="Default.aspx" />
     <Content Include="Default.htm" />
     <Content Include="Global.asax" />
-    <Content Include="GPM\AppList.aspx" />
-    <Content Include="GPM\AppMenu.aspx" />
-    <Content Include="GPM\AppMenuToEmp.aspx" />
-    <Content Include="GPM\Base\DataService.aspx" />
-    <Content Include="GPM\DBInstall.aspx" />
-    <Content Include="GPM\Default.aspx" />
-    <Content Include="GPM\Dev2Interface.asmx" />
-    <Content Include="GPM\EmpAppMenu.aspx" />
-    <Content Include="GPM\EmpForMenus.aspx" />
-    <Content Include="GPM\EmpGroupForMenus.aspx" />
-    <Content Include="GPM\Exit.aspx" />
-    <Content Include="GPM\Images\Banal.jpg" />
-    <Content Include="GPM\Images\bird.png" />
-    <Content Include="GPM\Images\folder.gif" />
-    <Content Include="GPM\Images\func.gif" />
-    <Content Include="GPM\Images\logo.png" />
-    <Content Include="GPM\Images\Menu.png" />
-    <Content Include="GPM\Images\Menu\application.png" />
-    <Content Include="GPM\Images\Menu\archive.png" />
-    <Content Include="GPM\Images\Menu\collaboration.png" />
-    <Content Include="GPM\Images\Menu\credit_card.png" />
-    <Content Include="GPM\Images\Menu\customers.png" />
-    <Content Include="GPM\Images\Menu\desktop_2.png" />
-    <Content Include="GPM\Images\Menu\feed.png" />
-    <Content Include="GPM\Images\Menu\forward.png" />
-    <Content Include="GPM\Images\Menu\my_account.png" />
-    <Content Include="GPM\Images\Menu\shipping.png" />
-    <Content Include="GPM\Images\Menu\sitemap.png" />
-    <Content Include="GPM\Images\Menu\sysset.png" />
-    <Content Include="GPM\Images\Menu\user1.png" />
-    <Content Include="GPM\Images\Menu\window.png" />
-    <Content Include="GPM\javascript\AppData.js" />
-    <Content Include="GPM\javascript\AppList.js" />
-    <Content Include="GPM\javascript\AppMenuToEmp.js" />
-    <Content Include="GPM\javascript\CC.MessageLib.js" />
-    <Content Include="GPM\javascript\EmpForMenus.js" />
-    <Content Include="GPM\javascript\EmpGroupForMenus.js" />
-    <Content Include="GPM\javascript\LeftMenu.js" />
-    <Content Include="GPM\javascript\StationForMenus.js" />
-    <Content Include="GPM\javascript\SystemMenus.js" />
-    <Content Include="GPM\jquery\easytemplate.js" />
-    <Content Include="GPM\jquery\jquery-1.7.2.min.js" />
-    <Content Include="GPM\jquery\jquery.easyui.min.js" />
-    <Content Include="GPM\jquery\jquery.min.js" />
-    <Content Include="GPM\jquery\locale\easyui-lang-zh_CN.js" />
-    <Content Include="GPM\ManagerDept.aspx" />
-    <Content Include="GPM\Pub.ascx" />
-    <Content Include="GPM\SQLScript\CCIM.sql" />
-    <Content Include="GPM\SQLScript\GO.sql" />
-    <Content Include="GPM\SQLScript\MSSQL_GPM_VIEW.sql" />
-    <Content Include="GPM\SQLScript\InitPublicData.sql" />
-    <Content Include="GPM\SQLScript\MySQL_GPM_VIEW.sql" />
-    <Content Include="GPM\SQLScript\Port_Inc_CH_BPM.sql" />
-    <Content Include="GPM\SQLScript\Oracle_GPM_VIEW.sql" />
-    <Content Include="GPM\StationForMenus.aspx" />
-    <Content Include="GPM\SystemLoginLog.aspx" />
-    <Content Include="GPM\themes\default\accordion.css" />
-    <Content Include="GPM\themes\default\calendar.css" />
-    <Content Include="GPM\themes\default\combo.css" />
-    <Content Include="GPM\themes\default\combobox.css" />
-    <Content Include="GPM\themes\default\datagrid.css" />
-    <Content Include="GPM\themes\default\datebox.css" />
-    <Content Include="GPM\themes\default\dialog.css" />
-    <Content Include="GPM\themes\default\easyui.css" />
-    <Content Include="GPM\themes\default\images\accordion_arrows.png" />
-    <Content Include="GPM\themes\default\images\blank.gif" />
-    <Content Include="GPM\themes\default\images\calendar_arrows.png" />
-    <Content Include="GPM\themes\default\images\combo_arrow.png" />
-    <Content Include="GPM\themes\default\images\datagrid_icons.png" />
-    <Content Include="GPM\themes\default\images\datebox_arrow.png" />
-    <Content Include="GPM\themes\default\images\layout_arrows.png" />
-    <Content Include="GPM\themes\default\images\linkbutton_bg.png" />
-    <Content Include="GPM\themes\default\images\loading.gif" />
-    <Content Include="GPM\themes\default\images\menu_arrows.png" />
-    <Content Include="GPM\themes\default\images\messager_icons.png" />
-    <Content Include="GPM\themes\default\images\pagination_icons.png" />
-    <Content Include="GPM\themes\default\images\panel_tools.png" />
-    <Content Include="GPM\themes\default\images\searchbox_button.png" />
-    <Content Include="GPM\themes\default\images\slider_handle.png" />
-    <Content Include="GPM\themes\default\images\spinner_arrows.png" />
-    <Content Include="GPM\themes\default\images\tabs_icons.png" />
-    <Content Include="GPM\themes\default\images\tree_icons.png" />
-    <Content Include="GPM\themes\default\images\validatebox_warning.png" />
-    <Content Include="GPM\themes\default\layout.css" />
-    <Content Include="GPM\themes\default\linkbutton.css" />
-    <Content Include="GPM\themes\default\menu.css" />
-    <Content Include="GPM\themes\default\menubutton.css" />
-    <Content Include="GPM\themes\default\messager.css" />
-    <Content Include="GPM\themes\default\pagination.css" />
-    <Content Include="GPM\themes\default\panel.css" />
-    <Content Include="GPM\themes\default\progressbar.css" />
-    <Content Include="GPM\themes\default\propertygrid.css" />
-    <Content Include="GPM\themes\default\searchbox.css" />
-    <Content Include="GPM\themes\default\slider.css" />
-    <Content Include="GPM\themes\default\spinner.css" />
-    <Content Include="GPM\themes\default\splitbutton.css" />
-    <Content Include="GPM\themes\default\tabs.css" />
-    <Content Include="GPM\themes\default\tooltip.css" />
-    <Content Include="GPM\themes\default\tree.css" />
-    <Content Include="GPM\themes\default\validatebox.css" />
-    <Content Include="GPM\themes\default\window.css" />
-    <Content Include="GPM\themes\icon.css" />
-    <Content Include="GPM\themes\icons\add.gif" />
-    <Content Include="GPM\themes\icons\back.png" />
-    <Content Include="GPM\themes\icons\blank.gif" />
-    <Content Include="GPM\themes\icons\cancel.png" />
-    <Content Include="GPM\themes\icons\collaboration.png" />
-    <Content Include="GPM\themes\icons\config.gif" />
-    <Content Include="GPM\themes\icons\cut.png" />
-    <Content Include="GPM\themes\icons\delete.gif" />
-    <Content Include="GPM\themes\icons\down.gif" />
-    <Content Include="GPM\themes\icons\edit_add.png" />
-    <Content Include="GPM\themes\icons\edit_remove.png" />
-    <Content Include="GPM\themes\icons\filesave.png" />
-    <Content Include="GPM\themes\icons\gongneng.gif" />
-    <Content Include="GPM\themes\icons\help.png" />
-    <Content Include="GPM\themes\icons\home.png" />
-    <Content Include="GPM\themes\icons\kongzhidian.png" />
-    <Content Include="GPM\themes\icons\loading.gif" />
-    <Content Include="GPM\themes\icons\mini_add.png" />
-    <Content Include="GPM\themes\icons\mini_edit.png" />
-    <Content Include="GPM\themes\icons\mini_refresh.png" />
-    <Content Include="GPM\themes\icons\mulu.png" />
-    <Content Include="GPM\themes\icons\new.png" />
-    <Content Include="GPM\themes\icons\no.png" />
-    <Content Include="GPM\themes\icons\ok.png" />
-    <Content Include="GPM\themes\icons\pencil.png" />
-    <Content Include="GPM\themes\icons\person.png" />
-    <Content Include="GPM\themes\icons\print.png" />
-    <Content Include="GPM\themes\icons\redo.png" />
-    <Content Include="GPM\themes\icons\reload.png" />
-    <Content Include="GPM\themes\icons\reset.gif" />
-    <Content Include="GPM\themes\icons\rights.gif" />
-    <Content Include="GPM\themes\icons\save_close.png" />
-    <Content Include="GPM\themes\icons\search.gif" />
-    <Content Include="GPM\themes\icons\search.png" />
-    <Content Include="GPM\themes\icons\seasons.png" />
-    <Content Include="GPM\themes\icons\sum.png" />
-    <Content Include="GPM\themes\icons\tip.png" />
-    <Content Include="GPM\themes\icons\tree_folder.gif" />
-    <Content Include="GPM\themes\icons\undo.png" />
-    <Content Include="GPM\themes\icons\up.gif" />
-    <Content Include="GPM\themes\icons\xitong.png" />
-    <Content Include="GPM\themes\icons\xitongleibie.png" />
-    <Content Include="GPM\WhoCanUseApp.aspx" />
-    <Content Include="GPM\WhoCanViewInfoPush.aspx" />
     <Content Include="SDKFlowDemo\App\DictList.aspx" />
     <Content Include="SDKFlowDemo\App\DictList.htm" />
     <Content Include="SDKFlowDemo\App\DictListWelcome.htm" />
@@ -895,6 +748,10 @@
     <Content Include="WF\Admin\FlowFrm\FrmEnableRole.aspx" />
     <Content Include="WF\Admin\Img\PK.png" />
     <Content Include="WF\Admin\Info.aspx" />
+    <Content Include="WF\Admin\Org\Integration.aspx" />
+    <Content Include="WF\Admin\Org\IntegrationAD.aspx" />
+    <Content Include="WF\Admin\Org\IntegrationDB.aspx" />
+    <Content Include="WF\Admin\Org\IntegrationWS.aspx" />
     <Content Include="WF\Admin\Org\Working.png" />
     <Content Include="WF\Admin\AttrNode\SortingMapAttrs.aspx" />
     <Content Include="WF\Admin\Templete\Uploade.aspx" />
@@ -1045,6 +902,7 @@
     <Content Include="WF\CCForm\FrmExcel.aspx" />
     <Content Include="WF\CCForm\Img\loading.gif" />
     <Content Include="WF\CCForm\FrmWord.aspx" />
+    <Content Include="WF\CCForm\Port.aspx" />
     <Content Include="WF\CH.aspx" />
     <Content Include="WF\CH\ByDepts.aspx" />
     <Content Include="WF\CH\ByEmps.aspx" />
@@ -1311,6 +1169,7 @@
     <Content Include="WF\Comm\JS\jquery-1.7.2.min.js" />
     <Content Include="WF\Comm\JS\SearchEasyUI.js" />
     <Content Include="WF\Comm\JS\SearchEasyUIReadOnly.js" />
+    <Content Include="WF\Comm\JS\TBHelpDiv.js" />
     <Content Include="WF\Comm\JS\Tree.js" />
     <Content Include="WF\Comm\JS\TreeEns.js" />
     <Content Include="WF\Comm\Port\DeptTree.aspx" />
@@ -1354,6 +1213,7 @@
     <Content Include="SDKFlowDemo\SDK\Site.Master" />
     <Content Include="SDKFlowDemo\WinOpen.master" />
     <None Include="Service References\CloundWS\WS.wsdl" />
+    <None Include="WF\CCForm\Port.readme" />
     <None Include="WF\Data\Templete\NewFlow.json" />
     <Content Include="WF\Data\Install\SQLScript\InitView_MySQL.sql" />
     <Content Include="WF\Data\XML\BPMMenu.xml">
@@ -1370,8 +1230,10 @@
     <Content Include="WF\Data\ImpTableField.txt" />
     <Content Include="WF\Draft.aspx" />
     <Content Include="WF\ErrorPage.aspx" />
+    <Content Include="WF\FlowCheck\MyFlow.aspx" />
     <Content Include="WF\FlowRpt.aspx" />
     <Content Include="WF\Focus.aspx" />
+    <Content Include="WF\Img\CC.png" />
     <Content Include="WF\Img\redo.png" />
     <Content Include="WF\Img\Tree\Add.gif" />
     <Content Include="WF\Img\Tree\Cut.gif" />
@@ -1389,7 +1251,6 @@
     <Content Include="WF\MapDef\MapExt\DDLFullCtrl.aspx" />
     <Content Include="WF\MapDef\MapExt\ExcelFrm.aspx" />
     <Content Include="WF\MapDef\MapExt\InitScript.aspx" />
-    <Content Include="WF\MapDef\MapExt\InputCheck.aspx" />
     <Content Include="WF\MapDef\MapExt\List.aspx" />
     <Content Include="WF\MapDef\MapExt\PageLoadFull.aspx" />
     <Content Include="WF\MapDef\MapExt\PopVal.aspx" />
@@ -1400,6 +1261,7 @@
     <Content Include="WF\MapDef\MapExt\TBFullCtrl_List.aspx" />
     <Content Include="WF\MapDef\MapExt\TBFullCtrl_old.aspx" />
     <Content Include="WF\MapDef\MapExt\WordFrm.aspx" />
+    <Content Include="WF\MapDef\MapExt\RegularExpressionBatch.aspx" />
     <Content Include="WF\MapDef\SFSQL.aspx" />
     <Content Include="WF\MapDef\EditSQL.aspx" />
     <Content Include="WF\MapDef\SFWS.aspx" />
@@ -1857,6 +1719,8 @@
     <Content Include="WF\Img\Action\AskforHelp.png" />
     <Content Include="WF\Img\Action\Skip.png" />
     <Content Include="WF\Img\Action\ForwardAskfor.png" />
+    <Content Include="WF\SDKComponents\TrackChart.ascx" />
+    <Content Include="WF\SDKComponents\TrackList.ascx" />
     <Content Include="WF\SDKComponents\TruakOnly.ascx" />
     <Content Include="WF\Start.aspx" />
     <Content Include="WF\MapDef\BatchEdit.aspx" />
@@ -2219,9 +2083,7 @@
     <Content Include="WF\Data\XML\Menu.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="WF\Data\XML\RegularExpression.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="WF\Data\XML\RegularExpression.xml" />
     <Content Include="WF\Data\XML\SDK.xml" />
     <Content Include="WF\Data\XML\UserTools.xml" />
     <Content Include="WF\Data\XML\WebConfigDesc.xml">
@@ -2814,133 +2676,6 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\AppList.aspx.cs">
-      <DependentUpon>AppList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\AppList.aspx.designer.cs">
-      <DependentUpon>AppList.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\AppMenu.aspx.cs">
-      <DependentUpon>AppMenu.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\AppMenu.aspx.designer.cs">
-      <DependentUpon>AppMenu.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\AppMenuToEmp.aspx.cs">
-      <DependentUpon>AppMenuToEmp.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\AppMenuToEmp.aspx.designer.cs">
-      <DependentUpon>AppMenuToEmp.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\Base\DataService.aspx.cs">
-      <DependentUpon>DataService.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\Base\DataService.aspx.designer.cs">
-      <DependentUpon>DataService.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\DBInstall.aspx.cs">
-      <DependentUpon>DBInstall.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\DBInstall.aspx.designer.cs">
-      <DependentUpon>DBInstall.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\Dev2Interface.asmx.cs">
-      <DependentUpon>Dev2Interface.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GPM\EmpAppMenu.aspx.cs">
-      <DependentUpon>EmpAppMenu.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\EmpAppMenu.aspx.designer.cs">
-      <DependentUpon>EmpAppMenu.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\EmpForMenus.aspx.cs">
-      <DependentUpon>EmpForMenus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\EmpForMenus.aspx.designer.cs">
-      <DependentUpon>EmpForMenus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\EmpGroupForMenus.aspx.cs">
-      <DependentUpon>EmpGroupForMenus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\EmpGroupForMenus.aspx.designer.cs">
-      <DependentUpon>EmpGroupForMenus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\Exit.aspx.cs">
-      <DependentUpon>Exit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\Loginin.aspx.cs">
-      <DependentUpon>Loginin.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\Loginin.aspx.designer.cs">
-      <DependentUpon>Loginin.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\ManagerDept.aspx.cs">
-      <DependentUpon>ManagerDept.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\ManagerDept.aspx.designer.cs">
-      <DependentUpon>ManagerDept.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\Pub.ascx.cs">
-      <DependentUpon>Pub.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\Pub.ascx.designer.cs">
-      <DependentUpon>Pub.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\StationForMenus.aspx.cs">
-      <DependentUpon>StationForMenus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\StationForMenus.aspx.designer.cs">
-      <DependentUpon>StationForMenus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\SystemLoginLog.aspx.cs">
-      <DependentUpon>SystemLoginLog.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\SystemLoginLog.aspx.designer.cs">
-      <DependentUpon>SystemLoginLog.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\WhoCanUseApp.aspx.cs">
-      <DependentUpon>WhoCanUseApp.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\WhoCanUseApp.aspx.designer.cs">
-      <DependentUpon>WhoCanUseApp.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\WhoCanViewInfoPush.aspx.cs">
-      <DependentUpon>WhoCanViewInfoPush.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\WhoCanViewInfoPush.aspx.designer.cs">
-      <DependentUpon>WhoCanViewInfoPush.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GPM\WinOpen.master.cs">
-      <DependentUpon>WinOpen.master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GPM\WinOpen.master.designer.cs">
-      <DependentUpon>WinOpen.master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SDKFlowDemo\App\DictList.aspx.cs">
@@ -4298,6 +4033,34 @@
     <Compile Include="WF\Admin\Info.aspx.designer.cs">
       <DependentUpon>Info.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WF\Admin\Org\Integration.aspx.cs">
+      <DependentUpon>Integration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\Admin\Org\Integration.aspx.designer.cs">
+      <DependentUpon>Integration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WF\Admin\Org\IntegrationAD.aspx.cs">
+      <DependentUpon>IntegrationAD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\Admin\Org\IntegrationAD.aspx.designer.cs">
+      <DependentUpon>IntegrationAD.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WF\Admin\Org\IntegrationDB.aspx.cs">
+      <DependentUpon>IntegrationDB.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\Admin\Org\IntegrationDB.aspx.designer.cs">
+      <DependentUpon>IntegrationDB.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WF\Admin\Org\IntegrationWS.aspx.cs">
+      <DependentUpon>IntegrationWS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\Admin\Org\IntegrationWS.aspx.designer.cs">
+      <DependentUpon>IntegrationWS.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WF\Admin\Org\Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4735,6 +4498,13 @@
     <Compile Include="WF\CCForm\FrmWord.aspx.designer.cs">
       <DependentUpon>FrmWord.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WF\CCForm\Port.aspx.cs">
+      <DependentUpon>Port.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\CCForm\Port.aspx.designer.cs">
+      <DependentUpon>Port.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WF\CH.aspx.cs">
       <DependentUpon>CH.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5004,6 +4774,13 @@
     <Compile Include="WF\ErrorPage.aspx.designer.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WF\FlowCheck\MyFlow.aspx.cs">
+      <DependentUpon>MyFlow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\FlowCheck\MyFlow.aspx.designer.cs">
+      <DependentUpon>MyFlow.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WF\FlowCheck\Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5095,13 +4872,6 @@
     <Compile Include="WF\MapDef\MapExt\InitScript.aspx.designer.cs">
       <DependentUpon>InitScript.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WF\MapDef\MapExt\InputCheck.aspx.cs">
-      <DependentUpon>InputCheck.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WF\MapDef\MapExt\InputCheck.aspx.designer.cs">
-      <DependentUpon>InputCheck.aspx</DependentUpon>
-    </Compile>
     <Compile Include="WF\MapDef\MapExt\List.aspx.cs">
       <DependentUpon>List.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5171,6 +4941,13 @@
     </Compile>
     <Compile Include="WF\MapDef\MapExt\WordFrm.aspx.designer.cs">
       <DependentUpon>WordFrm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WF\MapDef\MapExt\RegularExpressionBatch.aspx.cs">
+      <DependentUpon>RegularExpressionBatch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\MapDef\MapExt\RegularExpressionBatch.aspx.designer.cs">
+      <DependentUpon>RegularExpressionBatch.aspx</DependentUpon>
     </Compile>
     <Compile Include="WF\MapDef\Rpt\RptGuide.Master.cs">
       <DependentUpon>RptGuide.Master</DependentUpon>
@@ -5861,6 +5638,20 @@
     </Compile>
     <Compile Include="WF\FlowSearch.aspx.designer.cs">
       <DependentUpon>FlowSearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WF\SDKComponents\TrackChart.ascx.cs">
+      <DependentUpon>TrackChart.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\SDKComponents\TrackChart.ascx.designer.cs">
+      <DependentUpon>TrackChart.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WF\SDKComponents\TrackList.ascx.cs">
+      <DependentUpon>TrackList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WF\SDKComponents\TrackList.ascx.designer.cs">
+      <DependentUpon>TrackList.ascx</DependentUpon>
     </Compile>
     <Compile Include="WF\SDKComponents\TruakOnly.ascx.cs">
       <DependentUpon>TruakOnly.ascx</DependentUpon>
@@ -7831,8 +7622,6 @@
     <Content Include="WF\Admin\EventEntity\Site.Master" />
     <Content Include="WF\App\Simple\SiteMenu.Master" />
     <Content Include="WF\Admin\Condition.Master" />
-    <None Include="GPM\themes\default\images\Thumbs.db" />
-    <Content Include="GPM\WinOpen.master" />
     <Content Include="WF\Admin\CCFormDesigner\Site.Master" />
     <Content Include="WF\Admin\CreateFlowGuide\Site.Master" />
     <Content Include="WF\CCForm\CCFormHeader.ashx" />
@@ -7897,7 +7686,7 @@
     <Folder Include="WF\Admin\CCFormDesigner\lib\sets\" />
     <Folder Include="WF\Admin\ClientBin\NodeIcon\" />
     <Folder Include="WF\App\Classic\Img\Menu\" />
-    <Folder Include="WF\Data\FlowDemo\" />
+    <Folder Include="WF\Data\FlowDemo\Flow\" />
     <Folder Include="WF\Data\JSLib\onchange\" />
     <Folder Include="WF\Data\JSLib\ondblclick\" />
     <Folder Include="WF\Data\JSLib\onkeyup\" />
@@ -7907,10 +7696,6 @@
     <ProjectReference Include="..\Components\BP.En30\BP.En30.csproj">
       <Project>{F9D27BAB-758D-4205-BFC8-76B49A4C87F1}</Project>
       <Name>BP.En30</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Components\BP.GPM\BP.GPM.csproj">
-      <Project>{BA60EE39-F64F-49CB-80AB-6BB108EA4154}</Project>
-      <Name>BP.GPM</Name>
     </ProjectReference>
     <ProjectReference Include="..\Components\BP.Web.Controls30\BP.Web.Controls30.csproj">
       <Project>{B04D173B-69F6-4BF3-8EA4-8DB2FC7F33F4}</Project>
@@ -7929,6 +7714,9 @@
     <EmbeddedResource Include="WF\WorkOpt\CCFlowAPI.resx">
       <DependentUpon>CCFlowAPI.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

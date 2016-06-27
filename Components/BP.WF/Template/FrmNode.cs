@@ -347,6 +347,7 @@ namespace BP.WF.Template
         }
         /// <summary>
         /// 对应的解决方案
+        /// 0=默认方案.节点编号=自定义方案, 1=不可编辑.
         /// </summary>
         public int FrmSln
         {
@@ -429,17 +430,33 @@ namespace BP.WF.Template
                 this.SetValByKey(FrmNodeAttr.FK_Flow, value);
             }
         }
+        /// <summary>
+        /// 是否可以编辑？
+        /// </summary>
         public bool IsEdit
         {
             get
             {
-                return this.GetValBooleanByKey(FrmNodeAttr.IsEdit);
-            }
-            set
-            {
-                this.SetValByKey(FrmNodeAttr.IsEdit, value);
+                if (this.FrmSln == 1)
+                    return true;
+                return false;
             }
         }
+        /// <summary>
+        /// 是否可以编辑？
+        /// </summary>
+        public int IsEditInt
+        {
+            get
+            {
+                if (this.IsEdit)
+                    return 1;
+                return 0;
+            }
+        }
+        /// <summary>
+        /// 是否可以打印
+        /// </summary>
         public bool IsPrint
         {
             get
@@ -451,13 +468,9 @@ namespace BP.WF.Template
                 this.SetValByKey(FrmNodeAttr.IsPrint, value);
             }
         }
-        public int IsEditInt
-        {
-            get
-            {
-                return this.GetValIntByKey(FrmNodeAttr.IsEdit);
-            }
-        }
+        /// <summary>
+        /// 是否可以打印
+        /// </summary>
         public int IsPrintInt
         {
             get
@@ -465,7 +478,9 @@ namespace BP.WF.Template
                 return this.GetValIntByKey(FrmNodeAttr.IsPrint);
             }
         }
-
+        /// <summary>
+        /// 汇总
+        /// </summary>
         public string HuiZong
         {
             get
@@ -503,7 +518,11 @@ namespace BP.WF.Template
             if (i == 0)
             {
                 this.IsPrint = false;
-                this.IsEdit = false;
+
+                //不可以编辑.
+                this.FrmSln = 1;
+
+               // this.IsEdit = false;
                 return;
                 throw new Exception("@表单关联信息已被删除。");
             }
@@ -527,7 +546,7 @@ namespace BP.WF.Template
                 map.AddTBString(FrmNodeAttr.FrmType, "0", "表单类型", true, true, 1, 20, 20);
 
                 //菜单在本节点的权限控制.
-                map.AddTBInt(FrmNodeAttr.IsEdit, 1, "是否可以更新", true, false);
+               // map.AddTBInt(FrmNodeAttr.IsEdit, 1, "是否可以更新", true, false);
                 map.AddTBInt(FrmNodeAttr.IsPrint, 0, "是否可以打印", true, false);
                 map.AddTBInt(FrmNodeAttr.IsEnableLoadData, 0, "是否启用装载填充事件", true, false);
 

@@ -22,161 +22,73 @@ namespace CCFlow.WF.Admin.XAP
     [System.Web.Script.Services.ScriptService]
     public class WSDesigner : System.Web.Services.WebService
     {
-
-        OSModel model = BP.Sys.OSModel.OneMore;
-        // 如果用户安装时选择不安装案例,则流程树、表单树和组织结构表都不存在根节点，此时需要手动添加根节点，
-        // 流程设计器初始化时调用
-        // 此功能应该添加到安装时，因为每次流程树加载都需要执行一次检查
-        private bool TreeRootCheck()
-        {
-            try
-            {
-                // 流程树根节点校验
-                string tmp = "SELECT Name FROM WF_FlowSort where ParentNo =0";
-                tmp = DBAccess.RunSQLReturnString(tmp);
-                if (string.IsNullOrEmpty(tmp))
-                {
-                    tmp = "INSERT INTO WF_FlowSort(No,Name,ParentNo,TreeNo,idx,IsDir) values('01','流程树',0,'',0,0)";
-                    DBAccess.RunSQLReturnString(tmp);
-                }
-
-                // 表单树根节点校验
-                tmp = "SELECT Name FROM Sys_FormTree WHERE ParentNo =0";
-                tmp = DBAccess.RunSQLReturnString(tmp);
-                if (string.IsNullOrEmpty(tmp))
-                {
-                    tmp = "INSERT INTO Sys_FormTree(No,Name,ParentNo,TreeNo,Idx,IsDir) values('01','表单树',0,'',0,0)";
-                    DBAccess.RunSQLReturnString(tmp);
-                }
-
-                // 组织结构校验
-                model = (OSModel)Enum.Parse(typeof(OSModel), this.GetConfig("OSModel"), true);
-                if (model == OSModel.OneMore)
-                {
-                    BP.GPM.Depts rootDepts = new BP.GPM.Depts("0");
-                    if (rootDepts == null || rootDepts.Count == 0)
-                    {
-                        BP.GPM.Dept rootDept = new BP.GPM.Dept();
-                        rootDept.Name = "集团总部";
-                        rootDept.ParentNo = "0";
-                        rootDept.Idx = 0;
-                        rootDept.Insert();
-                    }
-                }
-                else if (model == BP.Sys.OSModel.OneOne)
-                {
-                    BP.Port.Depts rootDepts = new BP.Port.Depts("0");
-                    if (rootDepts == null || rootDepts.Count == 0)
-                    {
-                        BP.GPM.Dept rootDept = new BP.GPM.Dept();
-                        rootDept.Name = "集团总部";
-                        rootDept.ParentNo = "0";
-                        rootDept.Idx = 0;
-                        rootDept.Insert();
-                    }
-                }
-                return true;
-            }
-            catch (Exception e)
-            {
-                throw new Exception("流程树根节点检查错误", e);
-            }
-        }
-
-        // 流程设计器树控件数据源
+        /// <summary>
+        /// 流程设计器树控件数据源
+        /// </summary>
+        /// <param name="paras"></param>
+        /// <returns></returns>
         [WebMethod]
         public string GetFlowDesignerTree(params bool[] paras)
         {
-            if (!TreeRootCheck())
-                throw new Exception("设计器根节点自动修复错误,请手动为流程树、表单树和组织结构数据添加根节点");
 
-            string result = string.Empty;
-            string sqls = string.Empty;
-            List<string> tableNames = new List<string>();
-            bool isBegin = true;
+            //检查树结构是否符合要求.
+            BP.WF.Glo.CheckTreeRoot(); 
+              
+            string sql = "";
+            DataSet myds = new DataSet();
 
-            // 是否加载流程树
-            if (paras.Length > 0 && paras[0])
-            {
-                tableNames.AddRange(new string[]{
-                      "WF_FlowSort",
-                      "WF_Flow"
-                  });
+            //加入流程类别.
+            sql = "SELECT No,Name,ParentNo FROM WF_FlowSort ORDER BY No,Idx";
+            DataTable dtFlowSort = BP.DA.DBAccess.RunSQLReturnTable(sql);
+            dtFlowSort.TableName = "WF_FlowSort";
+            myds.Tables.Add(dtFlowSort);
 
-                sqls += "@SELECT * FROM WF_FlowSort ORDER BY No,Idx";
-                sqls += "@SELECT No,Name,FK_FlowSort,Idx FROM WF_Flow ORDER BY FK_FlowSort,Idx,No";
-                isBegin = false;
-            }
-
-            // 是否加载表单树
-            if (paras.Length > 1 && paras[1])
-            {
-                tableNames.AddRange(new string[]{ 
-                    "Sys_FormTree", 
-                    "Sys_MapData" 
-                });
-
-                if (!isBegin)
-                {
-                    sqls += "@";
-                }
-
-                isBegin = false;
-                sqls += "SELECT No,Name,ParentNo FROM Sys_FormTree ORDER BY Idx ASC,No ASC";
-                sqls += "@SELECT No,Name,FK_FormTree FROM Sys_MapData WHERE AppType=" + (int)AppType.Application
-                    + " AND FK_FormTree IN (SELECT No FROM Sys_FormTree) ORDER BY Idx ASC ,No ASC";
-            }
-
-            // 是否加载组织结构树
-            if (paras.Length > 2 && paras[2])
-            {
-                tableNames.AddRange(new string[]{ 
-                    "Port_Dept", 
-                    "Port_Emp"
-                });
-
-                if (!isBegin)
-                {
-                    sqls += "@";
-                }
-
-                if (BP.Sys.SystemConfig.OSDBSrc == OSDBSrc.Database)
-                {
-                    if (model == BP.Sys.OSModel.OneMore)
-                    {
-                        sqls += "SELECT No,Name,ParentNo,TreeNo FROM Port_Dept ORDER BY Idx ASC,No ASC";
-                        sqls += "@SELECT  No,Name,FK_Dept  FROM Port_Emp ";
-                    }
-                    else
-                    {
-                        sqls += "SELECT No,Name,ParentNo FROM Port_Dept ORDER BY No ASC";
-                        sqls += "@SELECT  No,Name,FK_Dept  FROM Port_Emp ";
-                    }
-                }
-            }
-
-            DataSet ds = RunSQLReturnDataSet(sqls);// DBAccess.RunSQLReturnDataSet(sqls);
-            if (tableNames.Count == ds.Tables.Count)
-                for (int i = 0; i < ds.Tables.Count; i++)
-                {
-                    ds.Tables[i].TableName = tableNames[i];
-                }
+            //加入流程.
+            sql = "SELECT No,Name,FK_FlowSort FROM WF_Flow ORDER BY No,Idx";
+            DataTable dtFlow = BP.DA.DBAccess.RunSQLReturnTable(sql);
+            dtFlow.TableName = "WF_Flow";
+            myds.Tables.Add(dtFlow);
 
 
+            //加入表单树.
+            sql = "SELECT No,Name,ParentNo FROM Sys_FormTree ORDER BY Idx ASC,No ASC";
+            DataTable dtFormTree = BP.DA.DBAccess.RunSQLReturnTable(sql);
+            dtFormTree.TableName = "Sys_FormTree";
+            myds.Tables.Add(dtFormTree);
+
+            //加入表单.
+            sql = "SELECT a.No, a.Name, a.FK_FormTree FROM Sys_MapData a, Sys_FormTree b WHERE a.AppType=" + (int)AppType.Application + " AND a.FK_FormTree=b.No ORDER BY a.Idx ASC , a.No ASC";
+            DataTable dtForm = BP.DA.DBAccess.RunSQLReturnTable(sql);
+            dtForm.TableName = "Sys_MapData";
+            myds.Tables.Add(dtForm);
+
+            // 装载组织结构.
             if (BP.Sys.SystemConfig.OSDBSrc == OSDBSrc.WebServices)
             {
                 var ws = DataType.GetPortalInterfaceSoapClientInstance();
                 DataTable dt = ws.GetDepts();
                 dt.TableName = "Port_Dept";
-                ds.Tables.Add(dt);
+                myds.Tables.Add(dt);
 
                 DataTable dtEmp = ws.GetEmps();
                 dtEmp.TableName = "Port_Emp";
-                ds.Tables.Add(dtEmp);
+                myds.Tables.Add(dtEmp);
             }
+            else
+            {
+                //加入部门.
+                sql = "SELECT No,Name,ParentNo FROM Port_Dept ORDER BY No,Idx";
+                DataTable dtDept = BP.DA.DBAccess.RunSQLReturnTable(sql);
+                dtDept.TableName = "Port_Dept";
+                myds.Tables.Add(dtDept);
 
-            result = Connector.ToXml(ds);
-            return result;
+                //加入人员.
+                sql = "SELECT No,Name,FK_Dept FROM Port_Emp ORDER BY No,Idx";
+                DataTable dtEmp = BP.DA.DBAccess.RunSQLReturnTable(sql);
+                dtEmp.TableName = "Port_Emp";
+                myds.Tables.Add(dtEmp);
+            }
+            return Connector.ToXml(myds);
         }
 
         StringBuilder sbJson = new StringBuilder();
@@ -227,8 +139,6 @@ SELECT No, FK_FrmSort as ParentNo,Name,Idx,0 IsParent FROM Sys_MapData   where A
 
             return sTmp;
         }
-
-
         /// <summary>
         /// 根据DataTable生成Json树结构
         /// </summary>
@@ -256,7 +166,6 @@ SELECT No, FK_FrmSort as ParentNo,Name,Idx,0 IsParent FROM Sys_MapData   where A
                     for (int i = 0; i < rows.Length; i++)
                     {
                         DataRow row = rows[i];
-
 
                         string jNo = row[idCol] as string;
                         string jText = row[txtCol] as string;
@@ -1641,7 +1550,6 @@ SELECT No, FK_FrmSort as ParentNo,Name,Idx,0 IsParent FROM Sys_MapData   where A
                 return "Error: Occured on upload the file. Error Message is :\n" + exception.Message;
             }
         }
-
         /// <summary>
         /// 
         /// </summary>

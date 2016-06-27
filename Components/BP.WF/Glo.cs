@@ -124,8 +124,9 @@ namespace BP.WF
         public static string UpdataCCFlowVer()
         {
             #region 检查是否需要升级，并更新升级的业务逻辑.
-            string val = "20160562";
+            string val = "20160515";
             string updataNote = "";
+            updataNote += "20160515.升级表单引擎绑定，去掉Isedit列.";
             updataNote += "20160526.升级FrmEnableRole状态.";
             updataNote += "20160501.升级todosta状态.";
             updataNote += "20160420.升级表单属性.";
@@ -167,9 +168,23 @@ namespace BP.WF
             string msg = "";
             try
             {
+
+                #region 表单方案中的不可编辑, 旧版本如果包含了这个列.
+                if (BP.DA.DBAccess.IsExitsTableCol("WF_FrmNode", "IsEdit") == true)
+                {
+                    /*如果存在这个列,就查询出来=0的设置，就让其设置为不可以编辑的。*/
+                    sql = "UPDATE WF_FrmNode SET FrmSln=1 WHERE IsEdit=0 ";
+                    DBAccess.RunSQL(sql);
+
+                    sql = "UPDATE WF_FrmNode SET IsEdit=100000";
+                    DBAccess.RunSQL(sql);
+                }
+                #endregion
+
                 //执行升级 2016.04.08 
                 BP.WF.Template.Cond cnd = new Cond();
                 cnd.CheckPhysicsTable();
+
 
                 #region 标签Ext
                 sql = "DELETE FROM Sys_EnCfg WHERE No='BP.WF.Template.NodeExt'";
@@ -218,14 +233,14 @@ namespace BP.WF
                 sql += "@RunModel=运行模式,分合流,父子流程";
                 sql += "@AutoJumpRole0=跳转,自动跳转规则当遇到该节点时如何让其自动的执行下一步.";
                 sql += "@MPhone_WorkModel=移动,与手机平板电脑相关的应用设置.";
-                sql += "@TSpanDay=考核,时效考核,质量考核.";
+           //     sql += "@TSpanDay=考核,时效考核,质量考核.";
                 //  sql += "@MsgCtrl=消息,流程消息信息.";
                 sql += "@OfficeOpen=公文按钮,只有当该节点是公文流程时候有效";
                 sql += "')";
-                BP.DA.DBAccess.RunSQL(sql);
+                DBAccess.RunSQL(sql);
 
                 sql = "DELETE FROM Sys_EnCfg WHERE No='BP.WF.Template.FlowSheet'";
-                BP.DA.DBAccess.RunSQL(sql);
+                DBAccess.RunSQL(sql);
                 sql = "INSERT INTO Sys_EnCfg(No,GroupTitle) VALUES ('BP.WF.Template.FlowSheet','";
                 sql += "@No=基本配置";
                 sql += "@FlowRunWay=启动方式,配置工作流程如何自动发起，该选项要与流程服务一起工作才有效.";
@@ -510,18 +525,18 @@ namespace BP.WF
 
                 #region 执行报表设计。
                 Flows fls = new Flows();
-                fls.RetrieveAll();
-                foreach (Flow fl in fls)
-                {
-                    try
-                    {
-                        MapRpts rpts = new MapRpts(fl.No);
-                    }
-                    catch
-                    {
-                        fl.DoCheck();
-                    }
-                }
+                //fls.RetrieveAll();
+                //foreach (Flow fl in fls)
+                //{
+                //    try
+                //    {
+                //        MapRpts rpts = new MapRpts(fl.No);
+                //    }
+                //    catch
+                //    {
+                //        fl.DoCheck();
+                //    }
+                //}
                 #endregion
 
                 #region 升级站内消息表 2013-10-20
@@ -530,19 +545,24 @@ namespace BP.WF
                 #endregion
 
                 #region 重新生成view WF_EmpWorks,  2013-08-06.
-                try
-                {
-                    BP.DA.DBAccess.RunSQL("DROP VIEW WF_EmpWorks");
-                    BP.DA.DBAccess.RunSQL("DROP VIEW V_FlowStarter");
-                    BP.DA.DBAccess.RunSQL("DROP VIEW V_FlowStarterBPM");
-                    BP.DA.DBAccess.RunSQL("DROP VIEW V_TOTALCH");
-                    BP.DA.DBAccess.RunSQL("DROP VIEW V_TOTALCHYF");
-                    BP.DA.DBAccess.RunSQL("DROP VIEW V_TOTALCHWeek");
-                }
-                catch
-                {
-                }
 
+                if (DBAccess.IsExitsObject("WF_EmpWorks")==true)
+                    BP.DA.DBAccess.RunSQL("DROP VIEW WF_EmpWorks");
+
+                if (DBAccess.IsExitsObject("V_FlowStarter") == true)
+                    BP.DA.DBAccess.RunSQL("DROP VIEW V_FlowStarter");
+
+                if (DBAccess.IsExitsObject("V_FlowStarterBPM") == true)
+                    BP.DA.DBAccess.RunSQL("DROP VIEW V_FlowStarterBPM");
+
+                if (DBAccess.IsExitsObject("V_TOTALCH") == true)
+                    BP.DA.DBAccess.RunSQL("DROP VIEW V_TOTALCH");
+
+                if (DBAccess.IsExitsObject("V_TOTALCHYF") == true)
+                    BP.DA.DBAccess.RunSQL("DROP VIEW V_TOTALCHYF");
+
+                if (DBAccess.IsExitsObject("V_TOTALCHWeek") == true)
+                    BP.DA.DBAccess.RunSQL("DROP VIEW V_TOTALCHWeek");
 
                 string sqlscript = "";
                 //执行必须的sql.
@@ -713,6 +733,10 @@ namespace BP.WF
                 }
                 #endregion
 
+
+              
+
+
                 // 最后更新版本号，然后返回.
                 sql = "UPDATE Sys_Serial SET IntVal=" + val + " WHERE CfgKey='Ver'";
                 if (DBAccess.RunSQL(sql) == 0)
@@ -771,7 +795,7 @@ namespace BP.WF
         /// <summary>
         /// 安装包
         /// </summary>
-        public static void DoInstallDataBase(string lang, bool isInstallFlowDemo,bool isInstallCCIM)
+        public static void DoInstallDataBase(string lang, bool isInstallFlowDemo)
         {
 
             #region 检查是否是空白的数据库。
@@ -840,18 +864,18 @@ namespace BP.WF
                         en.CheckPhysicsTable();
                         break;
                 }
+
+                en.CheckPhysicsTable();
                 en.PKVal = "123";
                 try
                 {
-                    en.RetrieveFromDBSources();
+                    en.RetrieveFromDBSources(); 
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
-                    Log.DebugWriteWarning(ex.Message);
-                    en.CheckPhysicsTable();
+                    BP.DA.Log.DefaultLogWriteLine(LogType.Error, "@查询失败: ens = " + en.ToString());
                 }
             }
-
 
             #region 创建 Port_EmpDept 视图兼容旧版本.
             //创建视图.
@@ -907,7 +931,7 @@ namespace BP.WF
             }
 
             //删除这个数据, 没有找到，初始化这些数据失败的原因.
-            BP.DA.DBAccess.RunSQL("DELETE FROM PORT_DEPTSTATION");
+            BP.DA.DBAccess.RunSQL("DELETE FROM Port_DeptStation");
 
             string sqlscript = "";
             if (Glo.OSModel == BP.Sys.OSModel.OneOne)
@@ -1031,8 +1055,10 @@ namespace BP.WF
                 //修复视图.
                 Flow.RepareV_FlowData_View();
                 
-            }else{
-                 
+            }
+
+            if (isInstallFlowDemo == false)
+            {
                 //创建一个空白的流程，不然，整个结构就出问题。
                 FlowSorts fss = new FlowSorts();
                 fss.RetrieveAll();
@@ -1057,8 +1083,6 @@ namespace BP.WF
                 s1 = (FlowSort)fs.DoCreateSubNode();
                 s1.Name = "人力资源类";
                 s1.Update();
-
-                
             }
             #endregion 装载demo.flow
 
@@ -1087,7 +1111,89 @@ namespace BP.WF
             //    nd.HisWork.CheckPhysicsTable();
             #endregion 执行补充的sql, 让外键的字段长度都设置成100.
 
+
+            #region 如果是第一次运行，就执行检查。
+            if (isInstallFlowDemo==true)
+            {
+                Flows fls = new Flows();
+                fls.RetrieveAll();
+                foreach (Flow fl in fls)
+                    fl.DoCheck();
+            }
+            #endregion 如果是第一次运行，就执行检查。
+
         }
+        /// <summary>
+        /// 检查树结构是否符合需求
+        /// </summary>
+        /// <returns></returns>
+        public static bool CheckTreeRoot()
+        {
+
+            // 流程树根节点校验
+            string tmp = "SELECT Name FROM WF_FlowSort WHERE ParentNo='0'";
+            tmp = DBAccess.RunSQLReturnString(tmp);
+            if (string.IsNullOrEmpty(tmp))
+            {
+                tmp = "INSERT INTO WF_FlowSort(No,Name,ParentNo,TreeNo,idx,IsDir) values('01','流程树',0,'',0,0)";
+                DBAccess.RunSQLReturnString(tmp);
+            }
+
+            // 表单树根节点校验
+            tmp = "SELECT Name FROM Sys_FormTree WHERE ParentNo = '0' ";
+            tmp = DBAccess.RunSQLReturnString(tmp);
+            if (string.IsNullOrEmpty(tmp))
+            {
+                tmp = "INSERT INTO Sys_FormTree(No,Name,ParentNo,TreeNo,Idx,IsDir) values('001','表单树',0,'',0,0)";
+                DBAccess.RunSQLReturnString(tmp);
+            }
+
+            //检查组织解构是否正确.
+            string sql = "SELECT * FROM Port_Dept WHERE ParentNo='0' ";
+            DataTable dt = DBAccess.RunSQLReturnTable(sql);
+            if (dt.Rows.Count == 0)
+            {
+                BP.Port.Dept rootDept = new BP.Port.Dept();
+                rootDept.Name = "总部";
+                rootDept.ParentNo = "0";
+                try
+                {
+                    rootDept.Insert();
+                }
+                catch (Exception ex)
+                {
+                    BP.DA.Log.DefaultLogWriteLineWarning("@尝试向port_dept插入数据失败，应该是视图问题. 技术信息:" + ex.Message);
+                }
+                throw new Exception("@没有找到部门树为0个根节点, 有可能是因为您在集成cc的时候，没有遵守cc的规则，部门树的根节点必须是ParentNo=0。");
+            }
+
+            if (BP.WF.Glo.OSModel == OSModel.OneOne)
+            {
+                try
+                {
+                    BP.Port.Dept dept = new BP.Port.Dept();
+                    dept.Retrieve(BP.Port.DeptAttr.ParentNo, "0");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("@cc的运行模式为OneOne @检查部门的时候错误:有可能是因为您在集成cc的时候，没有遵守cc的规则,Port_Dept列不符合要求，请仔细对比集成手册. 技术信息:" + ex.Message);
+                }
+            }
+
+            if (BP.WF.Glo.OSModel == OSModel.OneMore)
+            {
+                try
+                {
+                    //  BP.GPM.Depts rootDepts = new BP.GPM.Depts("0");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("@cc的运行模式为OneMore @检查部门的时候错误:有可能是因为您在集成cc的时候，没有遵守cc的规则,Port_Dept列不符合要求，请仔细对比集成手册. 技术信息:" + ex.Message);
+                }
+            }
+            return true;
+        }
+
         public static void KillProcess(string processName) //杀掉进程的方法
         {
             System.Diagnostics.Process[] processes = System.Diagnostics.Process.GetProcesses();
@@ -2945,7 +3051,7 @@ namespace BP.WF
                     _AttrsOfRpt.AddDDLSysEnum(GERptAttr.WFState, 0, "流程状态", true, true, GERptAttr.WFState);
                     _AttrsOfRpt.AddTBString(GERptAttr.FlowEmps, null, "参与人", true, false, 0, 10, 10);
                     _AttrsOfRpt.AddTBString(GERptAttr.FlowEnder, null, "结束人", true, false, 0, 10, 10);
-                    _AttrsOfRpt.AddTBString(GERptAttr.FlowEnderRDT, null, "结束时间", true, false, 0, 10, 10);
+                    _AttrsOfRpt.AddTBString(GERptAttr.FlowEnderRDT, null, "最后处理时间", true, false, 0, 10, 10);
                     _AttrsOfRpt.AddTBDecimal(GERptAttr.FlowEndNode, 0, "结束节点", true, false);
                     _AttrsOfRpt.AddTBDecimal(GERptAttr.FlowDaySpan, 0, "跨度(天)", true, false);
                     //_AttrsOfRpt.AddTBString(GERptAttr.FK_NY, null, "隶属月份", true, false, 0, 10, 10);
@@ -3156,7 +3262,7 @@ namespace BP.WF
         /// <returns></returns>
         public static string GenerUserSigantureHtml(string userNo, string userName)
         {
-            return "<img src='" + CCFlowAppPath + "DataUser/Siganture/" + userNo + ".jpg' title='" + userName + "' border=0 onerror=\"src='" + CCFlowAppPath + "DataUser/UserICON/DefaultSmaller.png'\" />";
+            return "<img src='" + CCFlowAppPath + "DataUser/Siganture/" + userNo + ".jpg' title='" + userName + "' border=0 onerror=\"src='" + CCFlowAppPath + "DataUser/UserIcon/DefaultSmaller.png'\" />";
         }
         /// <summary>
         /// 产生用户小图片
@@ -3164,7 +3270,7 @@ namespace BP.WF
         /// <returns></returns>
         public static string GenerUserImgSmallerHtml(string userNo, string userName)
         {
-            return "<img src='" + CCFlowAppPath + "DataUser/UserICON/" + userNo + "Smaller.png' border=0  style='height:15px;width:15px;padding-right:5px;vertical-align:middle;'  onerror=\"src='" + CCFlowAppPath + "DataUser/UserICON/DefaultSmaller.png'\" />" + userName;
+            return "<img src='" + CCFlowAppPath + "DataUser/UserIcon/" + userNo + "Smaller.png' border=0  style='height:15px;width:15px;padding-right:5px;vertical-align:middle;'  onerror=\"src='" + CCFlowAppPath + "DataUser/UserIcon/DefaultSmaller.png'\" />" + userName;
         }
         /// <summary>
         /// 产生用户大图片
@@ -3172,7 +3278,7 @@ namespace BP.WF
         /// <returns></returns>
         public static string GenerUserImgHtml(string userNo, string userName)
         {
-            return "<img src='" + CCFlowAppPath + "DataUser/UserICON/" + userNo + ".png'  style='padding-right:5px;width:60px;height:80px;border:0px;text-align:middle' onerror=\"src='" + CCFlowAppPath + "DataUser/UserICON/Default.png'\" /><br>" + userName;
+            return "<img src='" + CCFlowAppPath + "DataUser/UserIcon/" + userNo + ".png'  style='padding-right:5px;width:60px;height:80px;border:0px;text-align:middle' onerror=\"src='" + CCFlowAppPath + "DataUser/UserIcon/Default.png'\" /><br>" + userName;
         }
         /// <summary>
         /// 更新主表的SQL
@@ -3226,22 +3332,6 @@ namespace BP.WF
             }
         }
         /// <summary>
-        /// 微信是否启用
-        /// </summary>
-        public static bool IsEnable_WeiXin
-        {
-            get
-            {
-                //如果两个参数都不为空说明启用
-                string corpid = BP.Sys.SystemConfig.WX_CorpID;
-                string corpsecret = BP.Sys.SystemConfig.WX_AppSecret;
-                if (string.IsNullOrEmpty(corpid) || string.IsNullOrEmpty(corpsecret))
-                    return false;
-
-                return true;
-            }
-        }
-        /// <summary>
         /// 钉钉是否启用
         /// </summary>
         public static bool IsEnable_DingDing
@@ -3257,6 +3347,23 @@ namespace BP.WF
                 return true;
             }
         }
+        /// <summary>
+        /// 微信是否启用
+        /// </summary>
+        public static bool IsEnable_WeiXin
+        {
+            get
+            {
+                //如果两个参数都不为空说明启用
+                string corpid = BP.Sys.SystemConfig.WX_CorpID;
+                string corpsecret = BP.Sys.SystemConfig.WX_AppSecret;
+                if (string.IsNullOrEmpty(corpid) || string.IsNullOrEmpty(corpsecret))
+                    return false;
+
+                return true;
+            }
+        }
+      
         /// <summary>
         /// 运行模式
         /// </summary>
@@ -3973,6 +4080,55 @@ namespace BP.WF
 
         #region 其他方法。
         /// <summary>
+        /// 获得一个表单的动态附件字段
+        /// </summary>
+        /// <param name="exts">扩展</param>
+        /// <param name="nd">节点</param>
+        /// <param name="en">实体</param>
+        /// <param name="md">map</param>
+        /// <param name="attrs">属性集合</param>
+        /// <returns>附件的主键</returns>
+        public static string GenerActiveAths(MapExts exts, Node nd, Entity en, MapData md, MapAttrs attrs)
+        {
+            string strs = "";
+            foreach (MapExt me in exts)
+            {
+                if (me.ExtType != MapExtXmlList.SepcAthSepcUsers)
+                    continue;
+
+                bool isCando = false;
+                if (me.Tag1 != "")
+                {
+                    string tag1 = me.Tag1 + ",";
+                    if (tag1.Contains(BP.Web.WebUser.No + ","))
+                    {
+                        //根据设置的人员计算.
+                        isCando = true;
+                    }
+                }
+
+                if (me.Tag2 != "")
+                {
+                    //根据sql判断.
+                    string sql = me.Tag2.Clone() as string;
+                    sql = BP.WF.Glo.DealExp(sql, en, null);
+                    if (BP.DA.DBAccess.RunSQLReturnValFloat(sql) > 0)
+                        isCando = true;
+                }
+
+                if (me.Tag3 != "" && BP.Web.WebUser.FK_Dept == me.Tag3)
+                {
+                    //根据部门编号判断.
+                    isCando = true;
+                }
+
+                if (isCando == false)
+                    continue;
+                strs += me.Doc;
+            }
+            return strs;
+        }
+        /// <summary>
         /// 获得一个表单的动态权限字段
         /// </summary>
         /// <param name="exts"></param>
@@ -3988,6 +4144,7 @@ namespace BP.WF
             {
                 if (me.ExtType != MapExtXmlList.SepcFiledsSepcUsers)
                     continue;
+
                 bool isCando = false;
                 if (me.Tag1 != "")
                 {

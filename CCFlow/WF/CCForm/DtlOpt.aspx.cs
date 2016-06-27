@@ -9,6 +9,7 @@ using BP.En;
 using BP.WF.XML;
 using BP.Web;
 using BP.Sys;
+using System.IO;
 namespace CCFlow.WF.CCForm
 {
     public partial class WF_DtlOpt : BP.Web.WebPage
@@ -79,28 +80,26 @@ namespace CCFlow.WF.CCForm
         private void BindExpImp()
         {
             MapDtl dtl = new MapDtl(this.FK_MapDtl);
-            if (this.Request.QueryString["Flag"] == "ExpTemplete")
-            {
-                string file = this.Request.PhysicalApplicationPath + @"\DataUser\DtlTemplete\" + this.FK_MapDtl + ".xls";
-                if (System.IO.File.Exists(file) == false)
-                {
-                    this.WinCloseWithMsg("设计错误：流程设计人员没有把该导入的从表模版放入" + file);
-                    return;
-                }
-                BP.Sys.PubClass.OpenExcel(file, dtl.Name + ".xls");
-                this.WinClose();
-            }
 
             if (this.Request.QueryString["Flag"] == "ExpTemplete")
             {
-                string file = this.Request.PhysicalApplicationPath + @"\DataUser\DtlTemplete\" + this.FK_MapDtl + ".xls";
-                if (System.IO.File.Exists(file) == false)
+                string file = this.Request.PhysicalApplicationPath + "DataUser\\DtlTemplete\\" + this.FK_MapDtl + ".xlsx";
+                if (System.IO.File.Exists(file))
                 {
-                    this.WinCloseWithMsg("设计错误：流程设计人员没有把该导入的从表模版放入" + file);
+                    BP.Sys.PubClass.OpenExcel(file, dtl.Name + ".xlsx");
+                    this.WinClose();
                     return;
                 }
-                BP.Sys.PubClass.OpenExcel(file, dtl.Name + ".xls");
-                this.WinClose();
+
+                file = this.Request.PhysicalApplicationPath + "DataUser\\DtlTemplete\\" + this.FK_MapDtl + ".xls";
+                if (System.IO.File.Exists(file))
+                {
+                    BP.Sys.PubClass.OpenExcel(file, dtl.Name + ".xls");
+                    this.WinClose();
+                    return;
+                }
+
+                this.WinCloseWithMsg("设计错误：流程设计人员没有把该导入的从表模版放入" + file);
                 return;
             }
 
@@ -170,6 +169,11 @@ namespace CCFlow.WF.CCForm
             this.ExportDGToExcelV2(dtls, dtl.Name + ".xls");
             return;
         }
+        /// <summary>
+        /// edited by qin 无用代码删除  逻辑修改  支持excel列名中/英文 混合  16.6.21
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void btn_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
@@ -183,7 +187,7 @@ namespace CCFlow.WF.CCForm
                     return;
                 }
 
-                string tempPath = this.Request.PhysicalApplicationPath + "\\Temp\\";
+                string tempPath = this.Request.PhysicalApplicationPath + "Temp\\";
                 if (System.IO.Directory.Exists(tempPath) == false)
                     System.IO.Directory.CreateDirectory(tempPath);
 
@@ -207,56 +211,33 @@ namespace CCFlow.WF.CCForm
                 GEDtls dtls = new GEDtls(this.FK_MapDtl);
                 System.Data.DataTable dt = BP.DA.DBLoad.GetTableByExt(file);
 
-                file = this.Request.PhysicalApplicationPath + "\\DataUser\\DtlTemplete\\" + this.FK_MapDtl + ext;
-                if (System.IO.File.Exists(file) == false)
-                {
-                    if (ext == ".xlsx")
-                        file = this.Request.PhysicalApplicationPath + "\\DataUser\\DtlTemplete\\" + this.FK_MapDtl + ".xls";
-                    else
-                        file = this.Request.PhysicalApplicationPath + "\\DataUser\\DtlTemplete\\" + this.FK_MapDtl + ".xls";
-                }
-
-                System.Data.DataTable dtTemplete = BP.DA.DBLoad.GetTableByExt(file);
-
-                #region 检查两个文件是否一致。
-                foreach (DataColumn dc in dtTemplete.Columns)
-                {
-                    bool isHave = false;
-                    foreach (DataColumn mydc in dt.Columns)
-                    {
-                        if (dc.ColumnName == mydc.ColumnName)
-                        {
-                            isHave = true;
-                            break;
-                        }
-                    }
-                    if (isHave == false)
-                        throw new Exception("@您导入的excel文件不符合系统要求的格式，请下载模版文件重新填入。");
-                }
-                #endregion 检查两个文件是否一致。
-
-                #region 生成要导入的属性.
-
+                #region 检查两个文件是否一致。 生成要导入的属性
                 BP.En.Attrs attrs = dtls.GetNewEntity.EnMap.Attrs;
                 BP.En.Attrs attrsExp = new BP.En.Attrs();
-                foreach (DataColumn dc in dtTemplete.Columns)
+
+                bool isHave = false;
+                foreach (DataColumn dc in dt.Columns)
                 {
-                    foreach (Attr attr in attrs)
+                    foreach (BP.En.Attr attr in attrs)
                     {
-                        if (attr.UIVisible == false)
-                            continue;
-
-                        if (attr.IsRefAttr)
-                            continue;
-
-                        if (attr.Desc == dc.ColumnName.Trim())
+                        if (dc.ColumnName == attr.Desc)
                         {
+                            isHave = true;
                             attrsExp.Add(attr);
-                            break;
+                            continue;
+                        }
+
+                        if (dc.ColumnName.ToLower() == attr.Key.ToLower())
+                        {
+                            isHave = true;
+                            attrsExp.Add(attr);
+                            dc.ColumnName = attr.Desc;
                         }
                     }
                 }
-                #endregion 生成要导入的属性.
+                if (isHave == false)
+                    throw new Exception("@您导入的excel文件不符合系统要求的格式，请下载模版文件重新填入。");
+                #endregion
 
                 #region 执行导入数据.
                 if (DDL_ImpWay.SelectedIndex == 1)

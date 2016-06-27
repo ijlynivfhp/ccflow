@@ -9,6 +9,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
+    <div style="text-align:center">
 <h2>用户登录</h2>
    <fieldset>
     <legend> ccflow登录的API在Button事件后面 </legend>
@@ -17,6 +18,8 @@
   <br>
   密码： <asp:TextBox ID="TB_Pass" runat="server"></asp:TextBox>  <asp:Button ID="Button1" runat="server" Text=" 登录 " 
     onclick="Button1_Click" />
+
+    <font  color=gray> 默认密码为:123 或者 pub</font>
     <br>
     <br>
     </fieldset>
@@ -29,6 +32,8 @@
      <li>3, 验证成功后，就调用ccflow的登录API。 </li>
     </ul>
     </fieldset>
+
+    </div>
     </form>
 </body>
 </html>

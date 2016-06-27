@@ -808,6 +808,29 @@ namespace BP.DA
                 return SystemConfig.AppCenterDBType;
             }
         }
+        public static string _connectionUserID = null;
+        /// <summary>
+        /// 连接用户的ID
+        /// </summary>
+        public static string ConnectionUserID
+        {
+            get
+            {
+                if (_connectionUserID == null)
+                {
+                    string[] strs = BP.Sys.SystemConfig.AppCenterDSN.Split(';');
+                    foreach (string str in strs)
+                    {
+                        if (str.Contains("user ") == true)
+                        {
+                            _connectionUserID = str.Split('=')[1];
+                            break;
+                        }
+                    }
+                }
+                return _connectionUserID;
+            }
+        }
         public static IDbConnection GetAppCenterDBConn
         {
             get
@@ -1165,6 +1188,9 @@ namespace BP.DA
         /// <param name="pk">主键</param>
         public static void CreatePK(string tab, string pk, DBType db)
         {
+            if (DBAccess.IsExitsObject(tab + "pk") == true)
+                return;
+
             string sql;
             switch (db)
             {
@@ -1179,6 +1205,9 @@ namespace BP.DA
         }
         public static void CreatePK(string tab, string pk1, string pk2, DBType db)
         {
+            if (DBAccess.IsExitsObject(tab + "pk") == true)
+                return;
+
             string sql;
             switch (db)
             {
@@ -1193,6 +1222,9 @@ namespace BP.DA
         }
         public static void CreatePK(string tab, string pk1, string pk2, string pk3, DBType db)
         {
+            if (DBAccess.IsExitsObject(tab + "pk") == true)
+                return;
+
             string sql;
             switch (db)
             {
@@ -1212,7 +1244,6 @@ namespace BP.DA
         public static void CreatIndex(DBUrlType mydburl, string table, string pk)
         {
             string idxName = table + "ID";
-
             if (BP.DA.DBAccess.IsExitsObject(idxName) == true)
                 return;
 
@@ -1237,6 +1268,7 @@ namespace BP.DA
         }
         public static void CreatIndex(DBUrlType mydburl, string table, string pk1, string pk2)
         {
+
             //try
             //{
             //    DBAccess.RunSQL(mydburl, "CREATE INDEX " + table + "ID ON " + table + " (" + pk1 + "," + pk2 + ")");
@@ -2916,7 +2948,7 @@ namespace BP.DA
                     sql = "SELECT * FROM sysconstraints c inner join systables t on c.tabid = t.tabid where t.tabname = lower(?) and constrtype = 'P'";
                     break;
                 default:
-                    throw new Exception("ssseerr ");
+                    throw new Exception("@没有判断的数据库类型.");
             }
 
             DataTable dt = DBAccess.RunSQLReturnTable(sql, ps);
@@ -3028,7 +3060,7 @@ namespace BP.DA
                     case DBType.Oracle:
                         if (obj.IndexOf(".") != -1)
                             obj = obj.Split('.')[1];
-                        return IsExits("select tname from tab WHERE  tname = upper(:obj) ", ps);
+                        return IsExits("select object_name from all_objects WHERE  object_name = upper(:obj) and OWNER='" + DBAccess.ConnectionUserID.ToUpper() + "' ", ps);
                     case DBType.MSSQL:
                         return IsExits("SELECT name FROM sysobjects WHERE name = '" + obj + "'");
                     case DBType.Informix:

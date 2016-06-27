@@ -6,9 +6,10 @@
     <title>CCBPM2.0</title>
     <meta http-equiv="X-UA-Compatible" content="IE=9" />
     <link href="../../Scripts/easyUI/themes/default/easyui.css" rel="stylesheet" type="text/css" />
+    
     <link href="./Img/Menu/Designer.css" rel="stylesheet" type="text/css" />
 
-    <link href="../../Scripts/easyUI/themes/icon.css" rel="stylesheet" type="text/css" />
+
     <link rel="stylesheet" media="screen" type="text/css" href="./assets/css/style.css" />
     <link rel="stylesheet" media="screen" type="text/css" href="./assets/css/minimap.css" />
 
@@ -75,7 +76,7 @@
     <!--[if IE]>
         <script src="./assets/javascript/excanvas.js"></script>
     <![endif]-->
-    <link href="./Img/Menu/Designer.css" rel="stylesheet" type="text/css" />
+     
 
     <style type="text/css" >
      ToolbarIcon
@@ -87,6 +88,7 @@
           vertical-align:top;
           font-size:19px;
      }
+    
     </style>
 </head>
 <body id="body">
@@ -201,8 +203,8 @@
         </div>
     </div>
     <div id="nodeMenu" class="easyui-menu" style="width: 180px;">
-        <div data-options="iconCls:'icon-property',name:'NodePropertyNew'">节点属性(New)</div>
-        <div data-options="iconCls:'icon-property',name:'NodeProperty'">节点属性</div>
+        <div data-options="iconCls:'icon-property',name:'NodePropertyNew'">节点属性</div>
+        <%--<div data-options="iconCls:'icon-property',name:'NodeProperty'">节点属性</div>--%>
         <div data-options="iconCls:'icon-edit',name:'editnodename'">修改名称</div>
         <div id="nodeModel_Menu_For_CCBPM">
             <span>节点类型</span>

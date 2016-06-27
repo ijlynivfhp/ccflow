@@ -38,7 +38,7 @@ namespace CCFlow.WF.Admin
         {
             get
             {
-                return this.Request.QueryString["GloSID"];
+                return BP.Web.WebUser.SID;
             }
         }
         #endregion 属性。
@@ -47,6 +47,15 @@ namespace CCFlow.WF.Admin
         {
             this.Title = "感谢您选择驰骋工作流程引擎-流程设计&测试界面";
         }
+
+        public void DoReturnToUser()
+        {
+            string userNo=this.Request.QueryString["UserNo"];
+            string sid= BP.WF.Dev2Interface.Port_Login(userNo, false);
+
+            string url = "../../WF/Port.aspx?UserNo=" + userNo + "&SID=" + sid + "&DoWhat=" + this.Request.QueryString["DoWhat"] + "&FK_Flow=" + this.FK_Flow + "&&IsMobile=" + this.Request.QueryString["IsMobile"];
+            this.Response.Redirect(url, true);
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             //if (this.GloSID != BP.WF.Glo.GloSID)
@@ -54,6 +63,19 @@ namespace CCFlow.WF.Admin
             //    this.Response.Write("全局的安全验证码错误,或者您没有设置,请在Web.config中的appsetting节点里设置GloSID 的值.");
             //    return;
             //}
+
+            //if (BP.Web.WebUser.No != "admin")
+            //{
+            //    this.ToErrorPage("@登录信息丢失，请使用admin登录。");
+            //    return;
+            //}
+
+            if (this.DoType == "ReturnToUser")
+            {
+                DoReturnToUser();
+                return;
+            }
+
 
             BP.Sys.SystemConfig.DoClearCash();
             // 让admin 登录.
@@ -211,7 +233,7 @@ namespace CCFlow.WF.Admin
             catch (Exception ex)
             {
                 this.Ucsys1.AddMsgOfWarning("错误原因",
-                        "<h2>您没有正确的设置开始节点的访问规则，请查看流程设计操作手册。</h2> 系统错误提示:" + ex.StackTrace + " - " + ex.Message +"<br><h3>也有可能你你切换了OSModel导致的，什么是OSModel,请查看 http://ccbpm.myflow.io .</h3>");
+                        "<h2>您没有正确的设置开始节点的访问规则，这样导致没有可启动的人员，请查看流程设计操作手册。</h2> 系统错误提示:" + ex.StackTrace + " - " + ex.Message + "<br><h3>也有可能你你切换了OSModel导致的，什么是OSModel,请查看在线帮助文档 <a href='http://ccbpm.mydoc.io' target=_blank>http://ccbpm.mydoc.io</a>  .</h3>");
                 return;
             }
 
@@ -226,12 +248,10 @@ namespace CCFlow.WF.Admin
             cball.Attributes["onclick"] = "SelectAll(this);";
             cball.Text = "选择全部";
             this.Ucsys1.AddTDTitle(cball);
-            //this.Ucsys1.AddTDTitle("极速模式");
-            this.Ucsys1.AddTDTitle("LigerUI模式");
+            //this.Ucsys1.AddTDTitle("EasyUI模式");
             this.Ucsys1.AddTDTitle("经典模式");
-           this.Ucsys1.AddTDTitle("手机模式");
-            //this.Ucsys1.AddTDTitle("SDK");
-            //this.Ucsys1.AddTDTitle("AmazeUI模式");
+            this.Ucsys1.AddTDTitle("素颜模式");
+            this.Ucsys1.AddTDTitle("手机模式");
             this.Ucsys1.AddTDTitle("所在部门");
             this.Ucsys1.AddTREnd();
             bool is1 = false;
@@ -260,14 +280,17 @@ namespace CCFlow.WF.Admin
                 cb.Text = emp.No + "," + emp.Name;
                 this.Ucsys1.AddTD(cb);
 
-                //this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=JiSu&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />极速模式</a>");
+                //this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=StartLigerUI&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&SID=" + this.GloSID + "'  ><img src='./../Img/IE.gif' border=0 />LigerUI模式</a>");
 
-                this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=StartLigerUI&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />LigerUI模式</a>");
-                this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=Start5&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />经典模式</a>");
-                this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=Start5&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsMobile=1'  ><img src='./../Img/IE.gif' border=0 />手机模式</a>");
+                this.Ucsys1.AddTD("<a href='?DoType=ReturnToUser&DoWhat=StartClassic&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />经典</a>");
+                this.Ucsys1.AddTD("<a href='?DoType=ReturnToUser&DoWhat=StartSimple&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />素颜</a>");
+                this.Ucsys1.AddTD("<a href='?DoType=ReturnToUser&DoWhat=StartClassic&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsMobile=1'  ><img src='./CCFormDesigner/Img/telephone.png' border=0 />手机模式</a>");
 
-               // this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=Start&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Blog模式</a>");                
-                //this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=StartSmallSingle&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");  
+                //this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=StartLigerUI&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&SID="+this.GloSID+"'  ><img src='./../Img/IE.gif' border=0 />LigerUI模式</a>");
+                //this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=Start5&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&SID=" + this.GloSID + "'  ><img src='./../Img/IE.gif' border=0 />经典模式</a>");
+                //this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=Start5&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&SID=" + this.GloSID + "&IsMobile=1'  ><img src='./../Img/IE.gif' border=0 />手机模式</a>");
+                //this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=Start&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&SID=" + this.GloSID + "'  ><img src='./../Img/IE.gif' border=0 />素颜模式</a>");                
+                ////this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=StartSmallSingle&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");  
               //  this.Ucsys1.AddTD("<a href='TestSDK.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1'  >SDK</a> ");
                 //this.Ucsys1.AddTD("<a href=\"javascript:WinOpenAndBrowser('./../Port.aspx?DoWhat=Amaze&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "' ,'470px','600px','" + emp.No + "');\"  ><img src='./../Img/IE.gif' border=0 width=25px height=18px />AmazeUI模式</a> ");
                 this.Ucsys1.AddTD(emp.FK_DeptText);

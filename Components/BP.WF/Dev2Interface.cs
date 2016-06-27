@@ -2589,34 +2589,30 @@ namespace BP.WF
         /// <summary>
         /// 验证用户的合法性
         /// </summary>
-        /// <param name="UserNo">用户编号</param>
+        /// <param name="userNo">用户编号</param>
         /// <param name="SID">密钥</param>
         /// <returns>是否匹配</returns>
-        public static bool Port_CheckUserLogin(string UserNo, string SID)
+        public static bool Port_CheckUserLogin(string userNo, string SID)
         {
-
-#warning 为了调试，暂时都返回true.
             return true;
 
-            if (string.IsNullOrEmpty(UserNo))
+            if (string.IsNullOrEmpty(userNo))
                 return false;
             if (string.IsNullOrEmpty(SID))
                 return false;
 
-            //随后改成动态sid
-            if (UserNo == "admin" && SID.ToUpper() == "33273D4A-35C8-4AE8-BDD9-0085EA648CCB")
-                return true;
+            Paras ps = new Paras();
+            ps.SQL = "SELECT SID FROM Port_Emp WHERE No="+SystemConfig.AppCenterDBVarStr+"No";
+            ps.Add("No", userNo);
 
-            BP.Port.Emp emp = new BP.Port.Emp(UserNo);
-            bool bHave = emp.RetrieveByAttr(BP.Port.EmpAttr.No, UserNo);
-            //用户编号不存在
-            if (bHave == false)
+            string mysid = DBAccess.RunSQLReturnStringIsNull(ps, null);
+            if (mysid == null)
+                throw new Exception("@没有取得用户("+userNo+")的SID.");
+
+            if (mysid == SID)
+                return true;
+            else
                 return false;
-
-            //用户匹配正确
-            if (emp.SID.Equals(SID))
-                return true;
-            return false;
         }
         /// <summary>
         /// 设置SID
@@ -2635,7 +2631,6 @@ namespace BP.WF
             else
                 return false;
         }
-
         /// <summary>
         /// 发送邮件与消息(如果传入4大流程参数将会增加一个工作链接)
         /// </summary>
@@ -3738,21 +3733,22 @@ namespace BP.WF
                 switch (nd.HisDeliveryWay)
                 {
                     case DeliveryWay.ByStation:
-                        var obj = BP.DA.DataType.GetPortalInterfaceSoapClientInstance();
-                        DataTable mydt = obj.GetEmpHisStations(BP.Web.WebUser.No);
-                        string mystas = BP.DA.DBAccess.GenerWhereInPKsString(mydt);
-                        ps.SQL = "SELECT COUNT(FK_Node) AS Num FROM WF_NodeStation WHERE FK_Node=" + dbstr + "FK_Node AND FK_Station IN(" + mystas + ")";
-                        ps.Add("FK_Node", nd.NodeID);
-                        num = DBAccess.RunSQLReturnValInt(ps);
+                        //var obj = BP.DA.DataType.GetPortalInterfaceSoapClientInstance();
+                        //DataTable mydt = obj.GetEmpHisStations(BP.Web.WebUser.No);
+                        //string mystas = BP.DA.DBAccess.GenerWhereInPKsString(mydt);
+                        //ps.SQL = "SELECT COUNT(FK_Node) AS Num FROM WF_NodeStation WHERE FK_Node=" + dbstr + "FK_Node AND FK_Station IN(" + mystas + ")";
+                        //ps.Add("FK_Node", nd.NodeID);
+                        //num = DBAccess.RunSQLReturnValInt(ps);
                         break;
                     case DeliveryWay.ByDept:
-                        var objMy = BP.DA.DataType.GetPortalInterfaceSoapClientInstance();
-                        DataTable mydtDept = objMy.GetEmpHisDepts(BP.Web.WebUser.No);
-                        string dtps = BP.DA.DBAccess.GenerWhereInPKsString(mydtDept);
+                        //var objMy = BP.DA.DataType.GetPortalInterfaceSoapClientInstance();
+                        //DataTable mydtDept = objMy.GetEmpHisDepts(BP.Web.WebUser.No);
+                        //string dtps = BP.DA.DBAccess.GenerWhereInPKsString(mydtDept);
 
-                        ps.SQL = "SELECT COUNT(FK_Node) as Num FROM WF_NodeDept WHERE FK_Dept IN (" + dtps + ") B.FK_Dept AND  A.FK_Node=" + dbstr + "FK_Node";
-                        ps.Add("FK_Node", nd.NodeID);
-                        num = DBAccess.RunSQLReturnValInt(ps);
+                        //ps.SQL = "SELECT COUNT(FK_Node) as Num FROM WF_NodeDept WHERE FK_Dept IN (" + dtps + ") B.FK_Dept AND  A.FK_Node=" + dbstr + "FK_Node";
+                        //ps.Add("FK_Node", nd.NodeID);
+                        //num = DBAccess.RunSQLReturnValInt(ps);
+                        throw new Exception("@目前取消支持.");
                         break;
                     case DeliveryWay.ByBindEmp:
                         ps.SQL = "SELECT COUNT(*) AS Num FROM WF_NodeEmp WHERE FK_Emp=" + dbstr + "FK_Emp AND FK_Node=" + dbstr + "FK_Node";
@@ -3797,40 +3793,7 @@ namespace BP.WF
                 return false;
 
             string sql = "select * from WF_Generworkflow where WorkID='" + workID + "'";
-
-
             return DBAccess.RunSQLReturnCOUNT(sql) > 0;
-        }
-        /// <summary>
-        /// 是否可以处理当前工作
-        /// </summary>
-        /// <param name="fk_flow">流程编号</param>
-        /// <param name="workID">工作ID</param>
-        /// <param name="userNo">用户编号</param>
-        /// <returns>是否可以处理当前工作</returns>
-        public static bool Flow_IsCanDoCurrentWork(string fk_flow, Int64 workID, string userNo)
-        {
-            try
-            {
-                GenerWorkFlow gwf = new GenerWorkFlow(workID);
-                return Flow_IsCanDoCurrentWork(fk_flow, gwf.FK_Node, workID, userNo);
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        /// <summary>
-        /// 检查是否可以处理当前的工作？
-        /// </summary>
-        /// <param name="nodeID">节点ID</param>
-        /// <param name="workID">工作ID</param>
-        /// <param name="userNo">操作员编号</param>
-        /// <returns>是否可以处理当前的工作</returns>
-        public static bool Flow_IsCanDoCurrentWork(int nodeID, Int64 workID, string userNo)
-        {
-            Node nd = new Node(nodeID);
-            return Flow_IsCanDoCurrentWork(nd.FK_Flow, nodeID, workID, userNo);
         }
         /// <summary>
         /// 检查指定节点上的所有子流程是否完成？
@@ -3868,7 +3831,6 @@ namespace BP.WF
             if (userNo == "admin")
                 return true;
 
-
             #region 判断是否是开始节点.
             /* 判断是否是开始节点 . */
             string str = nodeID.ToString();
@@ -3886,7 +3848,6 @@ namespace BP.WF
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(ps);
             if (dt.Rows.Count == 0)
                 return false;
-
 
             //判断是否是待办.
             int isPass = int.Parse(dt.Rows[0]["IsPass"].ToString());
@@ -3909,11 +3870,7 @@ namespace BP.WF
                     return false;
             }
 
-
             int i = int.Parse(dt.Rows[0][0].ToString());
-            //TaskSta TaskStai = (TaskSta)int.Parse(dt.Rows[0][1].ToString());
-            //if (TaskStai == TaskSta.Sharing)
-            //    return false; /*如果是共享状态，没有申请下来，就不能审批.*/
 
             RunModel rm = (RunModel)i;
             switch (rm)
@@ -3933,6 +3890,7 @@ namespace BP.WF
             }
             return true;
         }
+      
         /// <summary>
         /// 检查当前人员是否有权限处理当前的工作.
         /// </summary>
@@ -4180,13 +4138,14 @@ namespace BP.WF
             ps.Add(GenerWorkFlowAttr.WorkID, workid);
             int num = DBAccess.RunSQL(ps);
 
+
             if (fl.HisDataStoreModel == DataStoreModel.ByCCFlow)
             {
-                ps = new Paras();
-                ps.SQL = "UPDATE ND" + int.Parse(flowNo + "01") + " SET Title=" + dbstr + "Title WHERE OID=" + dbstr + "WorkID";
-                ps.Add(GenerWorkFlowAttr.Title, title);
-                ps.Add(GenerWorkFlowAttr.WorkID, workid);
-                DBAccess.RunSQL(ps);
+                //ps = new Paras();
+                //ps.SQL = "UPDATE ND" + int.Parse(flowNo + "01") + " SET Title=" + dbstr + "Title WHERE OID=" + dbstr + "WorkID";
+                //ps.Add(GenerWorkFlowAttr.Title, title);
+                //ps.Add(GenerWorkFlowAttr.WorkID, workid);
+                //DBAccess.RunSQL(ps);
             }
 
             if (num == 0)
@@ -6242,7 +6201,7 @@ namespace BP.WF
             BP.WF.GenerWorkFlow gwf = new GenerWorkFlow(workid);
 
             //检查当前人员是否开可以执行当前的工作?
-            if (Flow_IsCanDoCurrentWork(gwf.FK_Node, gwf.WorkID, WebUser.No) == false)
+            if (Flow_IsCanDoCurrentWork( gwf.FK_Flow,  gwf.FK_Node, gwf.WorkID, WebUser.No) == false)
                 throw new Exception("@当前的工作已经被别人处理或者您没有处理该工作的权限.");
 
             //检查被加签的人是否在当前的队列中.

@@ -877,6 +877,10 @@ namespace BP.WF.Template
             /*如果仍然有没有替换下来的变量.*/
             if (smsDocTmp.Contains("@"))
                 smsDocTmp = Glo.DealExp(smsDocTmp, en, null);
+
+            if (smsDocTmp.Contains("@"))
+                throw new Exception("@短信消息内容配置错误,里面有未替换的变量，请确认参数是否正确:"+smsDocTmp);
+
             string toEmpIDs = "";
             #endregion 处理当前的内容.
 
@@ -969,7 +973,7 @@ namespace BP.WF.Template
                         //发送短信.
                         Dev2Interface.Port_SendSMS(empEn.Tel, smsDocTmpReal, this.FK_Event, "WKAlt" + objs.VarToNodeID + "_" + workid, BP.Web.WebUser.No, null, empID, null);
                     }
-                    return "@已向:{" + toEmpIDs + "}发送提醒手机短信，由 SendSuccess 发出.";
+                    return "@已向:{" + toEmpIDs + "}发送提醒手机短信.";
                 }
 
                 if (this.SMSPushWay == 2)
@@ -980,7 +984,7 @@ namespace BP.WF.Template
                     {
                         //发送短信.
                         BP.WF.Dev2Interface.Port_SendSMS(tel, smsDocTmp, this.FK_Event, "WKAlt" + objs.VarToNodeID + "_" + workid);
-                        return "@已向:{" + tel + "}发送提醒手机短信，由 SendSuccess 发出.";
+                        return "@已向:{" + tel + "}发送提醒手机短信.";
                     }
                 }
             }

@@ -1813,7 +1813,7 @@ namespace BP.Sys
                 map.CodeStruct = "4";
 
                 #region 基础信息.
-                map.AddTBStringPK(MapDataAttr.No, null, "编号", true, false, 1, 100, 100);
+                map.AddTBStringPK(MapDataAttr.No, null, "编号", true, false, 1, 200, 100);
                 map.AddTBString(MapDataAttr.Name, null, "描述", true, false, 0, 500, 20);
 
                 map.AddTBString(MapDataAttr.EnPK, null, "实体主键", true, false, 0, 200, 20);
@@ -1912,6 +1912,7 @@ namespace BP.Sys
 
             if (ds.Tables.Contains("Sys_MapData") == false)
                 errMsg += "@缺少表:Sys_MapData";
+
             if (errMsg != "")
                 throw new Exception(errMsg);
 
@@ -1961,10 +1962,10 @@ namespace BP.Sys
             }
 
             if (isHave == false)
-                errMsg += "@缺少列:OID";
+                errMsg += "@表单模版缺少列:OID";
 
             if (errMsg != "")
-                throw new Exception("以下错误不可导入，可能的原因是非表单模板文件:" + errMsg);
+                throw new Exception("@以下错误不可导入，可能的原因是非表单模板文件:" + errMsg);
             #endregion
 
             // 定义在最后执行的sql.
@@ -2803,27 +2804,16 @@ namespace BP.Sys
             DBAccess.RunSQLs(sql);
             #endregion 删除相关的数据。
 
+            
             #region 删除物理表。
-            try
-            {
-                BP.DA.DBAccess.RunSQL("DROP TABLE " + this.PTable);
-            }
-            catch
-            {
-            }
+            //如果存在物理表.
+            if (DBAccess.IsExitsObject(this.PTable))
+                DBAccess.RunSQL("DROP TABLE " + this.PTable);
 
             MapDtls dtls = new MapDtls(this.No);
             foreach (MapDtl dtl in dtls)
-            {
-                try
-                {
-                    DBAccess.RunSQL("DROP TABLE " + dtl.PTable);
-                }
-                catch
-                {
-                }
                 dtl.Delete();
-            }
+
             #endregion
 
             return base.beforeDelete();
